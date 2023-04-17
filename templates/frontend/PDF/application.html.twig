@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ application.user }}</title>
+
+    <style>
+        #container {
+            width: 100%;
+            padding: 5%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table td {
+            border: 1px solid #666;
+            padding: 15px;
+        }
+
+        table td:first-child {
+            width: 30%;
+        }
+
+        table td.bg-light {
+            background: #f1f2f3;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <table>
+        <tbody>
+        <tr>
+            <td class="bg-light">Prénom</td>
+            <td>{{ application.user.firstname }}</td>
+        </tr>
+        <tr>
+            <td class="bg-light">Nom de famille</td>
+            <td>{{ application.user.name }}</td>
+        </tr>
+        <tr>
+            <td class="bg-light">Date de candidature</td>
+            <td>{{ application.creationDate|date('d/m/Y') }}</td>
+        </tr>
+        <tr>
+            <td class="bg-light">Email</td>
+            <td>{{ application.user.email }}</td>
+        </tr>
+        <tr>
+            <td class="bg-light">Numéro de téléphone</td>
+            <td>{{ application.user.phone }}</td>
+        </tr>
+        <tr>
+            <td class="bg-light">Adresse</td>
+            <td>{{ application.user.address ~ ' ' ~ application.user.postalCode ~ ' ' ~ application.user.city }}</td>
+        </tr>
+        <tr>
+            <td class="bg-light">Fiche linkedin</td>
+            <td>{{ application.user.linkedinLink }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

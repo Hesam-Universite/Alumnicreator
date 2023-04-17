@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if content.getContent and content.getContent.faviconName %}<link rel="icon" type="image/png" href="{{ vich_uploader_asset(content.getContent, 'faviconFile') }}">{% endif %}
+
+    <title>{% block title %}Alumni Creator | Administration{% endblock %}</title>
+
+    {% block styles %}
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        {{ encore_entry_link_tags('backend') }}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block scripts %}
+        {{ encore_entry_script_tags('backend') }}
+    {% endblock %}
+</head>
+<body>
+<div class="wrapper">
+    {{ include('backend/_sidebar.html.twig') }}
+
+    <div class="main">
+        {% include 'backend/_header.html.twig' with {
+            header_actions: block('header_actions') is defined ? block('header_actions') : ''
+        } %}
+
+        <main class="content">
+            <div class="container-fluid p-0">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+
+        {{ include('backend/_footer.html.twig') }}
+    </div>
+
+    <div {{ stimulus_controller('notifications', {successes: app.flashes('success'), errors: app.flashes('error')}) }}></div>
+</div>
+</body>
+</html>

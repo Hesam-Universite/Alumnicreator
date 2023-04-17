@@ -1,0 +1,22 @@
+.resumes {
+  &__all-students {
+    .overflow-scroll {
+      overflow-x: scroll;
+    }
+    .table {
+      td {
+        @include mobile-only {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+}
+
+.my-resume {
+  .resume-file {
+    .form-check {
+      display: none;
+    }
+  }
+}

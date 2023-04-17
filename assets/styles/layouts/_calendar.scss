@@ -1,0 +1,6 @@
+@include mobile-only {
+  .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin-left: unset!important;
+    margin-top: 20px!important;
+  }
+}

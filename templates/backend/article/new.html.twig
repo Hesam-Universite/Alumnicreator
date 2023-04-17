@@ -1,0 +1,69 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouvel article | Alumni Creator{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container form-article">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.title, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.title, {'attr':{'class':form.title.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.author, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.author, {'attr':{'class':form.author.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.author) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.tag, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.tag, {'attr':{'class':form.tag.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.tag) }}
+                </div>
+
+                <div class="mb-3" {{ stimulus_controller('tinymce') }}>
+                    {{ form_label(form.content, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.content, {'attr':{'class':form.content.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                    {{ form_errors(form.content) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.metaDescription, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.metaDescription, {'attr':{'class':form.metaDescription.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.metaDescription) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.status, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.status, {'attr':{'class':form.status.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.status) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.publishedAt, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.publishedAt, {'attr':{'class':form.publishedAt.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.publishedAt) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.featuredImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.featuredImageFile, {'attr':{'class':form.featuredImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.featuredImageFile) }}
+                </div>
+            </div>
+            <div class="mt-4">
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

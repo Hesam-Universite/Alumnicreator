@@ -1,0 +1,20 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | Gestion des flux{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-12 mb-3">
+                {{ form_label(form.url, null, {'label_attr':{'class':'form-label'}}) }}
+                {{ form_widget(form.url, {'attr':{'class':form.url.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                {{ form_errors(form.url) }}
+            </div>
+            <div class="col-12 mb-3">
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

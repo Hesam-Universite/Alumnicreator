@@ -1,0 +1,210 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Paramètres | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Adresse email de l'administrateur</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="ADEM" class="form-label col-md-2 required">Adresse email</label>
+                        <div class="col-md-10">
+                            <input type="email" class="form-control" id="ADEM" name="ADEM" value="{{ parameters['ADEM'] }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Configuration SMTP</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row mb-3">
+                        <label for="SMUT" class="form-label col-md-2">Nom d'utilisateur</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="SMUT" name="SMUT" value="{{ parameters['SMUT'] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="SMMP" class="form-label col-md-2">Mot de passe</label>
+                        <div class="col-md-10">
+                            <input type="password" class="form-control" id="SMMP" name="SMMP" value="{{ parameters['SMMP'] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="SMSE" class="form-label col-md-2 required">Serveur</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="SMSE" name="SMSE" value="{{ parameters['SMSE'] }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="SMPO" class="form-label col-md-2 required">Port</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="SMPO" name="SMPO" value="{{ parameters['SMPO'] }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="SMFR" class="form-label col-md-2 required">Adresse d'envoi des emails</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="SMFR" name="SMFR" value="{{ parameters['SMFR'] }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Matomo</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="MTMO" class="form-label col-md-2 required">Code Matomo</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" name="MTMO" id="MTMO" rows="10">
+                                {{ parameters['MTMO'] }}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Google Fonts</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="GOFT" class="form-label col-md-2 required">Token Google Fonts</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="GOFT" name="GOFT" value="{{ parameters['GOFT'] }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Import Annuaire</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="DIIM" class="form-label col-md-2 required">Comportement des doublons</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="DIIM" name="DIIM" aria-label="Default select example" required>
+                                <option {% if parameters['DIIM'] == 1 %}selected{% endif %} value="1">Remplacer</option>
+                                <option {% if parameters['DIIM'] == 2 %}selected{% endif %} value="2">Ne pas prendre en compte</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Pages</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="NPMN" class="form-label col-md-2 required">Nom menu</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="NPMN" name="NPMN" value="{{ parameters['NPMN'] }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Newsletters</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="NLST" class="form-label col-md-2 required">Statut</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="NLST" name="NLST" aria-label="Default select example" required>
+                                <option {% if parameters['NLST'] == 1 %}selected{% endif %} value="1">Activer les newsletters</option>
+                                <option {% if parameters['NLST'] == 2 %}selected{% endif %} value="2">Désactiver les newsletters</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="NLGB" class="form-label col-md-2 required">Gabarit</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" name="NLGB" id="NLGB" rows="10">
+                                {{ parameters['NLGB'] }}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Priorité des flux dans les actualités</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="NWPR" class="form-label col-md-2 required">Comportement des doublons</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="NWPR" name="NWPR" aria-label="Default select example" required>
+                                <option {% if parameters['NWPR'] == 1 %}selected{% endif %} value="1">Donner la priorité aux actualités du site</option>
+                                <option {% if parameters['NWPR'] == 2 %}selected{% endif %} value="2">Trier la totalité des articles par date </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Configuration coordonnées</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row mb-3">
+                        <label for="PHON" class="form-label col-md-2 required">Téléphone</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="PHON" name="PHON" value="{{ parameters['PHON'] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="ADRS" class="form-label col-md-2 required">Adresse postale</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="ADRS" name="ADRS" value="{{ parameters['ADRS'] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="MAIL" class="form-label col-md-2 required">Mail de contact</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="MAIL" name="MAIL" value="{{ parameters['MAIL'] }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="FACE" class="form-label col-md-2 required">Facebook</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="FACE" name="FACE" value="{{ parameters['FACE'] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="INST" class="form-label col-md-2 required">Instagram</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="INST" name="INST" value="{{ parameters['INST'] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="TWIT" class="form-label col-md-2 required">Twitter</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="TWIT" name="TWIT" value="{{ parameters['TWIT'] }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </div>
+{% endblock %}

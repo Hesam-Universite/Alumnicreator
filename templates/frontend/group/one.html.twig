@@ -1,0 +1,289 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}{{ group.name }} | Alumni Creator{% endblock %}
+
+{% block content %}
+    <style>
+        .calendar a {
+            color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+        }
+
+        .calendar .fc-h-event {
+            background-color: {{ visual_configurations.getVisualConfigurations[1] }}!important;
+            border: 1px solid {{ visual_configurations.getVisualConfigurations[1] }}!important;
+        }
+
+        .calendar .fc-button-primary {
+            background-color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+            border-color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+        }
+    </style>
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a class="breadcrumb--current" href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a></p>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="container first-container one-group">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="one-group__presentation d-flex justify-content-between">
+                    <div>
+                        <div class="separator"></div>
+                        <div class="d-xl-flex align-items-center">
+                            <h1>{{ group.name }}</h1>
+                            {% if is_granted('ROLE_ADMIN') or (connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value)) %}
+                                <a href="{{ path('group_edit', {id: group.id}) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+                        {% if group.activityArea %}
+                            <p class="mt-2 mb-2 d-flex flex-row align-items-center fw-bold"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-briefcase-fill me-2"></i> <span>{{ group.activityArea.name }}</span></p>
+                        {% endif %}
+                        {% if group.location %}
+                            <p class="mt-2 mb-2 d-flex flex-row align-items-center"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-geo-alt-fill me-2"></i> <span>{{ group.location }}</span></p>
+                        {% endif %}
+                        {% if connectedUserInGroup is null %}
+                            <a class="btn btn-primary" href="{{ path('group_join', {id: group.id}) }}">Rejoindre</a>
+                        {% elseif connectedUserInGroup is not null and 1 != connectedUserInGroup.roleInGroup.value %}
+                            <a class="custom-link" href="{{ path('group_leave', {id: group.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir quitter ce groupe ?')">Quitter le groupe</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') or (connectedUserInGroup is not null and 1 == connectedUserInGroup.roleInGroup.value) %}
+                            <a class="btn btn-primary" href="{{ path('group_export-emails', {id: group.id}) }}">Exporter les emails des membres</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="one-group__members mt-4">
+                    <div>
+                        <div class="d-xl-flex align-items-center">
+                            <h2 class="mb-4">Staff</h2>
+                            {% if is_granted('ROLE_ADMIN') or (connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value)) %}
+                                <a href="{{ path('group_members', {id: group.id}) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% for member in staffOfTheGroup %}
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="me-3">
+                                        {% if vich_uploader_asset(member.user, 'pictureFile') %}
+                                            <div class="user-picture">
+                                                <img src="{{ vich_uploader_asset(member.user, 'pictureFile') }}" alt="Photo de profil">
+                                            </div>
+                                        {% else %}
+                                            <div class="user-picture fake">
+                                                <p>
+                                                    {% if 'ROLE_COMPANY' in member.user.roles %}
+                                                        {{ member.user.companyName|slice(0, 1)|upper }}
+                                                    {% else %}
+                                                        {{ member.user.firstname|slice(0, 1)|upper }}{{ member.user.name|slice(0, 1)|upper }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <p class="fw-bold">
+                                            {% if 'ROLE_COMPANY' in member.user.roles %}{{ member.user.companyName }}{% else %}{{ member.user.firstname }} {{ member.user.name }}{% endif %}
+                                        </p>
+                                        <p>
+                                            {{ member.roleInGroup.label() }}
+                                        </p>
+                                        <div>
+                                            <a class="btn btn-primary btn-rounded small" href="{{ path('one_user', {'id': member.user.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                        </div>
+                                        {% if member.user != app.user %}
+                                        <div>
+                                            <a class="send-message-similar-user" href="{{ path('message_new', {'id': member.user.id}) }}">Envoyer un message</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if connectedUserInGroup is not null and 1 == connectedUserInGroup.roleInGroup.value %}
+                            <div>
+                                <hr>
+                                <div class="d-flex justify-content-center">
+                                    <a class="see-all-profiles" href="{{ path('group_new-member', {id: group.id}) }}">Ajouter un membre</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if members|length > 0 %}
+                    <div class="one-group__members mt-4">
+                        <div>
+                            <div class="d-xl-flex align-items-center">
+                                <h2 class="mb-4">Membres</h2>
+                                {% if is_granted('ROLE_ADMIN') or (connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value)) %}
+                                    <a href="{{ path('group_members', {id: group.id}) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                        </svg>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% for member in members %}
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="me-3">
+                                            {% if vich_uploader_asset(member.user, 'pictureFile') %}
+                                                <div class="user-picture">
+                                                    <img src="{{ vich_uploader_asset(member.user, 'pictureFile') }}" alt="Photo de profil">
+                                                </div>
+                                            {% else %}
+                                                <div class="user-picture fake">
+                                                    <p>
+                                                        {% if 'ROLE_COMPANY' in member.user.roles %}
+                                                            {{ member.user.companyName|slice(0, 1)|upper }}
+                                                        {% else %}
+                                                            {{ member.user.firstname|slice(0, 1)|upper }}{{ member.user.name|slice(0, 1)|upper }}
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <p class="fw-bold">
+                                                {% if 'ROLE_COMPANY' in member.user.roles %}{{ member.user.companyName }}{% else %}{{ member.user.firstname }} {{ member.user.name }}{% endif %}
+                                            </p>
+                                            <p>
+                                                {{ member.roleInGroup.label() }}
+                                            </p>
+                                            <div>
+                                                <a class="btn btn-primary btn-rounded small" href="{{ path('one_user', {'id': member.user.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                            </div>
+                                            {% if member.user != app.user %}
+                                                <div>
+                                                    <a class="send-message-similar-user" href="{{ path('message_new', {'id': member.user.id}) }}">Envoyer un message</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if connectedUserInGroup is not null and 1 == connectedUserInGroup.roleInGroup.value %}
+                                <div>
+                                    <hr>
+                                    <div class="d-flex justify-content-center">
+                                        <a class="see-all-profiles" href="{{ path('group_new-member', {id: group.id}) }}">Ajouter un membre</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-xl-8">
+
+                <div class="one-group__articles mt-4 mt-xl-0">
+                    <div>
+                        <div class="d-xl-flex align-items-center">
+                            <h2>Actualités</h2>
+                            {% if connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value) %}
+                                <a class="mb-2 ms-2" href="{{ path('group_new-article', {id: group.id}) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="mt-4">
+                            {% if articles|length == 0 %}
+                                <p>Aucun article n'a été publié dans le groupe.</p>
+                            {% else %}
+                                <div class="row news">
+                                    {% for article in articles %}
+                                        {% if article.publishedAt|date("Y-m-d H:i:s") <= "now"|date("Y-m-d H:i:s") %}
+                                            <div class="col-lg-4">
+                                                <div class="card card-article" style="width: 100%;">
+                                                    {% if article.featuredImageName is empty %}
+                                                        <img src="https://via.placeholder.com/300.png/a1a2a3/a1a2a3" />
+                                                    {% else %}
+                                                        <img src="{{ vich_uploader_asset(article, 'featuredImageFile') | imagine_filter('my_thumb') }}" />
+                                                    {% endif %}
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ article.title|e|u.truncate(40, '...') }}</h5>
+                                                        <p class="card-text">{{ article.content|replace({"&nbsp;": " ", "&egrave;": "è", "&agrave;": "à", "&eacute;": "é"})|striptags|u.truncate(60, '...') }}</p>
+                                                        <a href="{{ path('group_one-article', { id: group.id, article: article.id }) }}" class="btn btn-primary-reverse btn-rounded"><p>Lire la suite</p> <i class="bi bi-chevron-right"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div>
+                                    <a class="btn btn-primary" href="{{ path('group_index-articles', {id: group.id}) }}">Tous les articles</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one-group__calendar mt-4" {{ stimulus_controller('calendar', {events: events|serialize(format = 'json') }) }}>
+                    <div>
+                        <div class="d-xl-flex align-items-center">
+                            <h2>Calendrier du groupe</h2>
+                            {% if connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value) %}
+                                <a class="mb-2 ms-2" href="{{ path('group_index-events', {id: group.id}) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <div class="calendar" data-calendar-target="calendarEl">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one-group__medias mt-4">
+                    <div>
+                        <div class="d-xl-flex align-items-center">
+                            <h2>Galerie de médias</h2>
+                            {% if connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value) %}
+                                <a class="mb-2 ms-2" href="{{ path('group_handle-media', {id: group.id}) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+                        {% if mediasGroup|length == 0 %}
+                            <p>Aucun média n'a été pubié dans le groupe.</p>
+                        {% else %}
+                            <div class="mt-4 last-medias">
+                                {% for mediaGroup in mediasGroup %}
+                                    <img src="{{ vich_uploader_asset(mediaGroup, 'mediaFile') }}">
+                                {% endfor %}
+                            </div>
+                            <a class="btn btn-primary mt-3" href="{{ path('group_index-media', {id: group.id}) }}">Tous les médias</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

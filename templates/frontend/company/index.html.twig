@@ -1,0 +1,49 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Toutes les entreprises | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('index_companies') }}">Entreprises</a></p>
+    </div>
+    <div class="container first-container companies">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 companies__all-companies">
+                <div class="card-section">
+                    <h1 class="h2 fw-bold">Entreprises</h1>
+                    <table class="table mt-3">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Secteur d'activité</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for company in companies %}
+                            {% set numberOfJobsOffer = 0 %}
+                            <tr>
+                                <td class="fw-bold">{{ company.companyName }}</td>
+                                <td>
+                                    {% if class(company) == 'UserInstance' %}
+                                        {{ company.activityArea }}
+                                    {% else %}
+                                        {{ company.activityArea.name }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if class(company) == 'UserInstance' %}
+                                        <a href="{{ path('one_user_instance', { id: company.id }) }}" class="btn btn-primary btn-rounded small"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                    {% else %}
+                                        <a href="{{ path('one_user', { id: company.id }) }}" class="btn btn-primary btn-rounded small"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

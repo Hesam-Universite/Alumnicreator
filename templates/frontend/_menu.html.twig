@@ -1,0 +1,125 @@
+<style>
+    .btn-secondary {
+        background-color: {{ visual_configurations.getVisualConfigurations[1] }};
+        color: #ffffff!important;
+        text-transform: unset!important;
+        border: 1px solid {{ visual_configurations.getVisualConfigurations[1] }};
+    }
+
+    .btn-secondary:hover {
+        background-color: unset;
+        border: 1px solid {{ visual_configurations.getVisualConfigurations[1] }};
+        color: {{ visual_configurations.getVisualConfigurations[1] }}!important;
+    }
+</style>
+<nav class="navbar navbar-expand-xl">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('homepage') }}">
+            <img src="{% if content.getContent and content.getContent.logoName %}{{ vich_uploader_asset(content.getContent, 'logoFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}" alt="" height="60">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+            <ul class="ms-xl-4 ms-0 navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/carriere-black.svg') }}" alt="">{% endif %}
+                        Espace carrière
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('resume_all') }}">CVthèque</a></li>
+                        {% if (is_granted('ROLE_STUDENT') or is_granted('ROLE_ADMIN')) %}
+                            <li><a class="dropdown-item" href="{{ path('index_companies') }}">Entreprises</a></li>
+                        {% endif %}
+                        {% if (is_granted('ROLE_COMPANY') or is_granted('ROLE_ALUMNI') or is_granted('ROLE_ADMIN')) %}
+                            <li><a class="dropdown-item" href="{{ path('job_my') }}">Mes offres</a></li>
+                        {% endif %}
+                        {% if (is_granted('ROLE_STUDENT') or is_granted('ROLE_ALUMNI') or is_granted('ROLE_ADMIN')) %}
+                            <li><a class="dropdown-item" href="{{ path('job_index') }}">Offres d'emploi</a></li>
+                        {% endif %}
+                        {% if (is_granted('ROLE_COMPANY') or is_granted('ROLE_ALUMNI') or is_granted('ROLE_ADMIN')) %}
+                            <li><a class="dropdown-item" href="{{ path('job_new') }}">Déposer une offre</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('directory_index') }}">
+                        {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/annuaire-black.svg') }}" alt="">{% endif %}
+                        Annuaire
+                    </a>
+                </li>
+                {% if is_granted('ROLE_STUDENT') or is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('calendar_index') }}">
+                            {% if parameterMenuIcons() == 1 %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar me-2 me-xl-1" viewBox="0 0 16 16">
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                            </svg>
+                            {% endif %}
+                            Agenda
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('article_index') }}">
+                        {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/contact-black.svg') }}" alt="">{% endif %}
+                        Actualités
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ parameterPageMenu() }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for link in page() %}
+                            <li><a class="dropdown-item" href="/page/{{ link.slug }}">{{ link.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% if app.user %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/profil-black.svg') }}" alt="">{% endif %}
+                        Mon compte
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('my_account') }}">Informations</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a class="dropdown-item" href="{{ path('admin_index') }}">Back-office</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="mt-xl-0 mt-2 position-relative">
+                {% if app.user %}
+                    {% set numberOfNotifications = getGroupInvitationsOfConnectedUser(app.user.id) %}
+                    {% for userConversation in app.user.userConversations %}
+                        {% if userConversation.lastVisit < userConversation.lastNotification %}
+                            {% set numberOfNotifications = numberOfNotifications + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if numberOfNotifications >= 1 %}
+                        <div class="notification-global">
+                            {{ numberOfNotifications }}
+                        </div>
+                    {% endif %}
+                    <a href="{{ path('message_index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
+                            <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        </svg>
+                    </a>
+                {% else %}
+                    <div class="d-lg-flex align-items-center flex-column flex-xl-row">
+                        <div class="nav-item mb-2 mb-lg-0">
+                            <a class="nav-link connexion-link" href="{{ path('app_login') }}">Se connecter</a>
+                        </div>
+                        <a class="btn btn-secondary" href="{{ path('app_login') }}">Espace entreprise <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

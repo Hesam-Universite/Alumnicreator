@@ -1,0 +1,32 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Toutes les pages | Alumni Creator{% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('page_admin_new') }}" class="btn btn-success"> Nouvelle page</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                {% for page in pages %}
+                    <tr>
+                        <td>{{ page.title }}</td>
+                        <td><span class="badge {% if page.status.value == 2 %}bg-success{% else %}bg-warning{% endif %}">{{ page.status.label }}</span></td>
+                        <td><a class="btn btn-primary" href="{{ path('page_admin_edit', { id: page.id }) }}">Modifier</a></td>
+                        <td><a class="btn btn-danger" href="{{ path('page_admin_delete', { id: page.id }) }}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Gestion des mentions légales | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Politique de confidentialité</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                <textarea data-tinymceclassic-target="postContent" name="COPP" id="COPP" cols="20" rows="10" required>
+                                    {{ parameters['COPP'] }}
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Vie privée et Cookies</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                <textarea data-tinymceclassic-target="postContent" name="COPC" id="COPC" cols="20" rows="10" required>
+                                    {{ parameters['COPC'] }}
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </div>
+{% endblock %}

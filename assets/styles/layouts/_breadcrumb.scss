@@ -1,0 +1,15 @@
+.frontend-site .breadcrumb {
+  margin-top: 20px;
+  color: #838383;
+  font-style: italic;
+  a {
+    color: #838383;
+  }
+  &--current {
+    text-transform: uppercase;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: unset;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+.tutorial-backoffice {
+  &__numbers {
+    color: #0275d8;
+    min-width: 30px;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    border: 2px solid #0275d8;
+  }
+  p {
+    margin-bottom: 0;
+    margin-left: 10px;
+  }
+}

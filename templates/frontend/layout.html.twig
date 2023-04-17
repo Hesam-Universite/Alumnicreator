@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if content.getContent and content.getContent.faviconName %}<link rel="icon" type="image/png" href="{{ vich_uploader_asset(content.getContent, 'faviconFile') }}">{% endif %}
+
+    <title>{% block title %}Alumni Creator | Accueil{% endblock %}</title>
+
+    {% block meta %}
+
+    {% endblock %}
+
+    {% set mainTitleFont = fonts.getSelectedFonts[0]|replace({'[': '', ']': '', "'": ''})|split(', ') %}
+    {% set secondTitleFont = fonts.getSelectedFonts[1]|replace({'[': '', ']': '', "'": ''})|split(', ') %}
+    {% set contentFont = fonts.getSelectedFonts[2]|replace({'[': '', ']': '', "'": ''})|split(', ') %}
+
+    {% if mainTitleFont[1] starts with 'http' %}
+        <link rel="stylesheet"
+              href="{{ mainTitleFont[1] }}">
+    {% endif %}
+
+    {% if secondTitleFont[1] starts with 'http' %}
+        <link rel="stylesheet"
+              href="{{ secondTitleFont[1] }}">
+    {% endif %}
+
+    {% if contentFont[1] starts with 'http' %}
+    <link rel="stylesheet"
+          href="{{ contentFont[1] }}">
+    {% endif %}
+
+    {% block styles %}
+        <style>
+            /* === COLOR MENU === */
+
+            .navbar {
+                background-color: {{ visual_configurations.getVisualConfigurations[4] }};
+            }
+
+            .sidebar, .sidebar-content {
+                background-color: {{ visual_configurations.getVisualConfigurations[4] }}!important;
+            }
+
+            .sidebar-link, a.sidebar-link {
+                background-color: {{ visual_configurations.getVisualConfigurations[4] }}!important;
+            }
+
+            /* BUTTONS */
+            .btn-light {
+                color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+            }
+
+            .btn-light:hover {
+                background-color: unset!important;
+                color: #fff!important;
+            }
+
+            .btn-secondary {
+                background-color: {{ visual_configurations.getVisualConfigurations[1] }}!important;
+                color: #ffffff!important;
+                text-transform: unset!important;
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[1] }}!important;
+            }
+
+            .btn-secondary:hover {
+                background-color: unset!important;
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[1] }}!important;
+                color: {{ visual_configurations.getVisualConfigurations[1] }}!important;
+            }
+
+            .btn-primary-reverse {
+                background-color: unset;
+                color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+                text-transform: unset!important;
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[0] }}!important;
+            }
+
+            .btn-primary-reverse:hover {
+                background-color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[0] }}!important;
+                color: #ffffff!important;
+            }
+
+            .btn-primary {
+                background-color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+                color: #ffffff!important;
+                text-transform: unset!important;
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[0] }}!important;
+            }
+
+            .btn-primary:hover {
+                background-color: unset!important;
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[0] }}!important;
+                color: {{ visual_configurations.getVisualConfigurations[0] }}!important;
+            }
+
+            .invitation-accept, .invitation-decline {
+                background-color: {{ visual_configurations.getVisualConfigurations[0] }};
+            }
+
+            .invitation-accept:hover svg, .invitation-decline:hover svg {
+                color: {{ visual_configurations.getVisualConfigurations[0] }};
+            }
+
+            .invitation-accept:hover, .invitation-decline:hover {
+                border: 1px solid {{ visual_configurations.getVisualConfigurations[0] }};
+            }
+
+            /* ALL */
+            .separator {
+                background-color: {{ visual_configurations.getVisualConfigurations[0] }};
+            }
+        </style>
+        {{ encore_entry_link_tags('backend') }}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block scripts %}
+        <script src="{{ asset('/tarteaucitron/tarteaucitron.js') }}"></script>
+
+        </script>
+        <script type="text/javascript">
+            tarteaucitron.init({
+                "privacyUrl": "", /* Privacy policy url */
+                "bodyPosition": "bottom", /* or top to bring it as first element for accessibility */
+
+                "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
+                "cookieName": "tarteaucitron", /* Cookie name */
+
+                "orientation": "middle", /* Banner position (top - bottom) */
+
+                "groupServices": false, /* Group services by category */
+                "serviceDefaultState": "wait", /* Default state (true - wait - false) */
+
+                "showAlertSmall": false, /* Show the small banner on bottom right */
+                "cookieslist": false, /* Show the cookie list */
+
+                "closePopup": false, /* Show a close X on the banner */
+
+                "showIcon": true, /* Show cookie icon to manage cookies */
+                //"iconSrc": "", /* Optionnal: URL or base64 encoded image */
+                "iconPosition": "BottomRight", /* BottomRight, BottomLeft, TopRight and TopLeft */
+
+                "adblocker": false, /* Show a Warning if an adblocker is detected */
+
+                "DenyAllCta" : true, /* Show the deny all button */
+                "AcceptAllCta" : true, /* Show the accept all button when highPrivacy on */
+                "highPrivacy": true, /* HIGHLY RECOMMANDED Disable auto consent */
+
+                "handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
+
+                "removeCredit": false, /* Remove credit link */
+                "moreInfoLink": true, /* Show more info link */
+
+                "useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
+                "useExternalJs": false, /* If false, the tarteaucitron.js file will be loaded */
+
+                //"cookieDomain": ".my-multisite-domaine.fr", /* Shared cookie for multisite */
+
+                "readmoreLink": "", /* Change the default readmore link */
+
+                "mandatory": true, /* Show a message about mandatory cookies */
+                "mandatoryCta": true /* Show the disabled accept button when mandatory on */
+            });
+        </script>
+        <script type="text/javascript">
+            (tarteaucitron.job = tarteaucitron.job || []).push('youtube');
+        </script>
+        {{ encore_entry_script_tags('backend') }}
+    {% endblock %}
+
+    <style>
+        {% if not (mainTitleFont[1] starts with 'http') %}
+            @font-face {
+                font-family: '{{ mainTitleFont[0] }}';
+                src: url("{{ asset('fonts/' ~ mainTitleFont[1]) }}") format("woff2");
+            }
+        {% endif %}
+
+        {% if not (secondTitleFont[1] starts with 'http') %}
+            @font-face {
+                font-family: '{{ secondTitleFont[0] }}';
+                src: url("{{ asset('fonts/' ~ secondTitleFont[1]) }}") format("woff2");
+            }
+        {% endif %}
+
+        {% if not (contentFont[1] starts with 'http') %}
+            @font-face {
+                font-family: '{{ contentFont[0] }}';
+                src: url("{{ asset('fonts/' ~ contentFont[1]) }}") format("woff2");
+            }
+        {% endif %}
+
+        h1 {
+            font-family: '{{ mainTitleFont[0] }}', sans-serif;
+        }
+
+        h2 {
+            font-family: '{{ secondTitleFont[0] }}', sans-serif;
+        }
+
+        body {
+            font-family: '{{ contentFont[0] }}', sans-serif;
+        }
+    </style>
+</head>
+<body class="frontend-site">
+{% if visual_configurations.getVisualConfigurations[3] == 1 %}
+
+    {{ include('frontend/_menu.html.twig') }}
+
+{% elseif visual_configurations.getVisualConfigurations[3] == 2 %}
+
+    <div class="wrapper">
+        {{ include('frontend/_sidebar.html.twig') }}
+
+{% elseif visual_configurations.getVisualConfigurations[3] == 3 %}
+
+    <div class="wrapper">
+
+{% endif %}
+
+<div class="main">
+    <div class="container-fluid p-0">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+{% if visual_configurations.getVisualConfigurations[3] == 1 %}
+
+{{ include('frontend/_footer.html.twig') }}
+
+{% elseif visual_configurations.getVisualConfigurations[3] == 2 %}
+
+    </div>
+{{ include('frontend/_footer.html.twig') }}
+
+{% elseif visual_configurations.getVisualConfigurations[3] == 3 %}
+        {{ include('frontend/_sidebar.html.twig') }}
+    </div>
+{{ include('frontend/_footer.html.twig') }}
+{% endif %}
+
+</body>
+</html>

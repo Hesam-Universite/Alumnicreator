@@ -1,0 +1,40 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Toutes les instances connectées | Alumni Creator{% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_parameters_new_instance') }}" class="btn btn-success"> Connexion avec une nouvelle instance</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% if instances %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Votre ID</th>
+                            <th scope="col">ID instance distante</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for instance in instances %}
+                        <tr>
+                            <td>{{ instance.name }}</td>
+                            <td>{{ instance.localId }}</td>
+                            <td>{% if instance.externalId and instance.allowOtherInstance == true %}<span class="badge bg-success">Renseigné et connexion établie</span>{% elseif instance.externalId %}<span class="badge bg-primary">Renseigné, en attente de l'autre instance</span>{% else %}<span class="badge bg-warning">À renseigner</span>{% endif %}</td>
+                            <td><a class="btn btn-primary" href="{{ path('admin_parameters_edit_instance', { id: instance.id }) }}">Modifier</a></td>
+                            <td><a class="btn btn-danger" href="{{ path('admin_parameters_delete_instance', { id: instance.id }) }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center">Aucune instance n'est connectée</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

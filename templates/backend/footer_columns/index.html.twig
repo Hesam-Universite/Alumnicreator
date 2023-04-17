@@ -1,0 +1,32 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Colonnes du pied de page | Alumni Creator{% endblock %}
+
+{% block header_actions %}
+    {% if isAbleToCreateNewColumn %}
+        <a href="{{ path('admin_footer_new_column') }}" class="btn btn-success"> Nouvelle colonne</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Colonne</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                {% for column in columns %}
+                    <tr>
+                        <td>{{ column.name }}</td>
+                        <td><a class="btn btn-primary" href="{{ path('admin_footer_edit_column', {id: column.id}) }}">Modifier</a></td>
+                        <td><a class="btn btn-danger" href="{{ path('admin_footer_delete_column', {id: column.id}) }}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

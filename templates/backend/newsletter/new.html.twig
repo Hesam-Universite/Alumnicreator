@@ -1,0 +1,47 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouvelle campagne de newsletter | Alumni Creator {% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.subject, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.subject, {'attr':{'class':form.subject.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.subject) }}
+                    </div>
+
+                    <div class="mb-3" {{ stimulus_controller('tinymce') }}>
+                        {{ form_label(form.sendingTime, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.sendingTime, {'attr':{'class':form.sendingTime.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                        {{ form_errors(form.sendingTime) }}
+                    </div>
+
+                    <div class="mb-3" {{ stimulus_controller('tinymce') }}>
+                        {{ form_label(form.content, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.content, {'attr':{'class':form.content.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                        {{ form_errors(form.content) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.sendingEmail, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.sendingEmail, {'attr':{'class':form.sendingEmail.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.sendingEmail) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.recipientEmail, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.recipientEmail, {'attr':{'class':form.recipientEmail.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.recipientEmail) }}
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-primary" type="submit">{% if newsletterCampaign.id is not empty %}Modifier{% else %}Envoyer{% endif %}</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

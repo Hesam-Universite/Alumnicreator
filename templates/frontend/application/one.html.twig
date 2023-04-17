@@ -1,0 +1,17 @@
+{% extends '../layout.html.twig' %}
+
+{% block title %}Candidature de {{ application.user.firstname }} | Alumni Creator {% endblock %}
+
+{% block content %}
+    <div class="container first-container">
+        <h1 class="text-center">Candidature de {{ application.user.firstname }} {{ application.user.name }}</h1>
+        <p class="text-center">{{ resume.presentation }}</p>
+        <hr>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary" href="{{ vich_uploader_asset(resume, 'resume') }}">Télécharger son CV</a>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <a class="btn btn-primary" href="{{ vich_uploader_asset(application, 'additionalFile') }}">Télécharger le document complémentaire</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Événements du groupe | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a class="breadcrumb--current" href="{{ path('group_index-events', {id: group.id}) }}">Événements</a></p>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="container first-container group-events">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="group-events__index card-section d-flex justify-content-between">
+                    <div class="w-100">
+                        <h1 class="h2 fw-bold">Tous les événements</h1>
+                        {% for event in events %}
+                            <div class="d-flex justify-content-between align-items-center w-100 mt-3">
+                                <p class="mb-0">{{ event.title }}</p>
+                                <a style="color: red;" href="{{ path('group_delete-event', {id: group.id, event: event.id}) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        {% endfor %}
+                        {% if events|length == 0 %}
+                            <p class="mb-0 mt-3">Aucun événement trouvé pour ce groupe</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 mt-4 mt-xl-0">
+                <div class="group-events__index card-section d-flex justify-content-between">
+                    <div>
+                        <h1 class="h2 fw-bold">Nouvel événement</h1>
+                        <div>
+                            {{ form_start(form) }}
+                            <div class="row" {{ stimulus_controller('event') }}>
+                                <div class="mb-3">
+                                    {{ form_label(form.title, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.title, {'attr':{'class':form.title.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.title) }}
+                                </div>
+                                <div class="mb-2">
+                                    {{ form_label(form.allDay, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.allDay, {'attr':{'class':form.allDay.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.allDay) }}
+                                </div>
+                                <div class="mb-3" data-event-target="dateStart">
+                                    {{ form_label(form.start, null, {'label_attr':{'class':'form-label required'}}) }}
+                                    {{ form_widget(form.start, {'attr':{'class':form.start.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.start) }}
+                                </div>
+                                <div class="mb-3" data-event-target="dateEnd">
+                                    {{ form_label(form.end, null, {'label_attr':{'class':'form-label required'}}) }}
+                                    {{ form_widget(form.end, {'attr':{'class':form.end.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.end) }}
+                                </div>
+                                <div class="mb-3" data-event-target="fullDateStart">
+                                    {{ form_label(form.startFullday, null, {'label_attr':{'class':'form-label required'}}) }}
+                                    {{ form_widget(form.startFullday, {'attr':{'class':form.startFullday.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.startFullday) }}
+                                </div>
+                                <div class="mb-3" data-event-target="fullDateEnd">
+                                    {{ form_label(form.endFullday, null, {'label_attr':{'class':'form-label required'}}) }}
+                                    {{ form_widget(form.endFullday, {'attr':{'class':form.endFullday.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.endFullday) }}
+                                </div>
+                                {{ include('frontend/_mention_form.html.twig') }}
+                                <div class="d-flex justify-content-start">
+                                    <button class="btn btn-primary" type="submit">
+                                        Valider
+                                    </button>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

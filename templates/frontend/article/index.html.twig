@@ -1,0 +1,36 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Actualités | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('article_index') }}">Actualités</a></p>
+    </div>
+    <div class="container news">
+        <div class="row">
+            {% for article in articles %}
+                {% if article.publishedAt|date("Y-m-d H:i:s") <= "now"|date("Y-m-d H:i:s") %}
+                    <div class="col-lg-3">
+                        <div class="card card-article" style="width: 100%;">
+                            {% if article.isFromExternalFeed or article.featuredImageName is empty %}
+                                <img src="https://via.placeholder.com/300.png/a1a2a3/a1a2a3" />
+                            {% else %}
+                                <img src="{{ vich_uploader_asset(article, 'featuredImageFile') | imagine_filter('my_thumb') }}" />
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ article.title|e }}</h5>
+                                <p class="card-text">{{ article.content|replace({"&nbsp;": " ", "&egrave;": "è", "&agrave;": "à", "&eacute;": "é"})|striptags|u.truncate(80, '...') }}</p>
+                                {% if article.isFromExternalFeed %}
+                                    <a href="{{ article.slug }}" target="_blank" class="btn btn-primary-reverse btn-rounded"><p>Lire la suite</p> <i class="bi bi-chevron-right"></i></a>
+                                {% else %}
+                                    <a href="{{ path('article_one', { slug: article.slug }) }}" class="btn btn-primary-reverse btn-rounded"><p>Lire la suite</p> <i class="bi bi-chevron-right"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {{ knp_pagination_render(articles) }}
+        </div>
+    </div>
+{% endblock %}

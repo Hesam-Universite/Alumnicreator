@@ -1,0 +1,95 @@
+vich_uploader:
+    db_driver: orm
+    metadata:
+        type: attribute
+
+    mappings:
+        user_pictures:
+            uri_prefix: /images/utilisateurs
+            upload_destination: '%kernel.project_dir%/public/images/utilisateurs'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        additional_file:
+            uri_prefix: /documents/documents-complementaires
+            upload_destination: '%kernel.project_dir%/public/documents/documents-complementaires'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        resume:
+            uri_prefix: /documents/cv
+            upload_destination: '%kernel.project_dir%/public/documents/cv'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        job_company_logo:
+            uri_prefix: /images/entreprises
+            upload_destination: '%kernel.project_dir%/public/images/entreprises'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        job_attachment:
+            uri_prefix: /documents/documents-complementaires-entreprises
+            upload_destination: '%kernel.project_dir%/public/documents/documents-complementaires-entreprises'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        application_resume:
+            uri_prefix: /documents/cv
+            upload_destination: '%kernel.project_dir%/public/documents/cv'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        application_additional_file:
+            uri_prefix: /documents/documents-complementaires
+            upload_destination: '%kernel.project_dir%/public/documents/documents-complementaires'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        featured_image_article:
+            uri_prefix: /images/articles
+            upload_destination: '%kernel.project_dir%/public/images/articles'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        front_logo:
+            uri_prefix: /images/contenus
+            upload_destination: '%kernel.project_dir%/public/images/contenus'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        favicon:
+            uri_prefix: /images/favicon
+            upload_destination: '%kernel.project_dir%/public/images/favicon'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        front_hero:
+            uri_prefix: /images/contenus
+            upload_destination: '%kernel.project_dir%/public/images/contenus'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        front_students:
+            uri_prefix: /images/contenus
+            upload_destination: '%kernel.project_dir%/public/images/contenus'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        front_companies:
+            uri_prefix: /images/contenus
+            upload_destination: '%kernel.project_dir%/public/images/contenus'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        front_directory:
+            uri_prefix: /images/contenus
+            upload_destination: '%kernel.project_dir%/public/images/contenus'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        front_career:
+            uri_prefix: /images/contenus
+            upload_destination: '%kernel.project_dir%/public/images/contenus'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        post_image:
+            uri_prefix: /images/posts
+            upload_destination: '%kernel.project_dir%/public/images/posts'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        custom_font:
+            uri_prefix: /fonts
+            upload_destination: '%kernel.project_dir%/public/fonts'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        media_group:
+            uri_prefix: /images/groupes
+            upload_destination: '%kernel.project_dir%/public/images/groupes'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

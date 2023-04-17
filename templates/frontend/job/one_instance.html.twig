@@ -1,0 +1,114 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | {{ job.title }}{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('job_index') }}">Offres</a> > <a href="{{ path('job_one_instance', {'id': job.id}) }}" class="breadcrumb--current">{{ job.title }}</a></p>
+    </div>
+
+    <div class="container job-offer mb-5">
+        <div class="row">
+            <div class="col-xl-4 job-offer__company">
+                <div class="card-section">
+                    {% if job.pictureName is not null %}
+                        <div class="user-picture">
+                            <img src="{{ instance.instanceUrl }}/images/utilisateurs/{{ job.pictureName }}" alt="Photo de profil">
+                        </div>
+                    {% else %}
+                        <div class="user-picture fake">
+                            <p>
+                                {% if job.companyName is not null %}
+                                    {{ job.companyName|slice(0, 1)|upper }}
+                                {% else %}
+                                    <p>{{ job.firstname|slice(0, 1)|upper }}{{ job.lastname|slice(0, 1)|upper }}</p>
+                                {% endif %}
+                            </p>
+                        </div>
+                    {% endif %}
+                    {% if job.companyName is not null %}
+                        <h2 class="text-center h2 fw-bold">{{ job.companyName }}</h2>
+                    {% else %}
+                        <h2 class="text-center h2 fw-bold">{{ job.firstname}} {{ job.lastname }}</h2>
+                        <p class="text-center fw-bold">Alumni</p>
+                    {% endif %}
+                    <p class="my-3">{{ job.companyPresentation }}</p>
+                    <div class="d-flex">
+                        <div class="w-50 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt-fill me-3" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            <div>
+                                <p class="fw-bold">{{ job.city }}, {{ job.postalCode }}</p>
+                                <p>Localisation</p>
+                            </div>
+                        </div>
+                        <div class="w-50 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-briefcase-fill me-3" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                            </svg>
+                            <div>
+                                <p class="fw-bold">{{ job.activityArea }}</p>
+                                <p>Secteur d'activité</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if user is not null %}
+                        <div class="d-flex justify-content-center mt-4">
+                            <a class="btn btn-primary btn-rounded small" href="{{ path('one_user_instance', {id: user.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-xl-8 job-offer__informations mt-xl-0 mt-4">
+                <div class="card-section">
+                    <div class="d-flex align-items-xl-center flex-xl-row flex-column">
+                        <div class="w-xl-75 w-100">
+                            <h1 class="fw-bold h2 mt-xl-4 mt-0">{{ job.title }}</h1>
+                            <p class="fw-bold">Publié par {{ job.companyName }} le {{ job.creationDate|date('d/m/y') }}</p>
+                        </div>
+                        <div class="w-xl-25 w-100 d-flex justify-content-xl-end justify-content-center mb-3 mb-xl-0">
+                            <a class="btn btn-primary btn-rounded" href="{{ job.linkToTheJobOffer }}" target="_blank"><p>Postuler</p> <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="icons-section d-flex flex-column flex-xl-row">
+                        <div class="d-flex align-items-center me-0 me-xl-5 my-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-currency-euro me-3" viewBox="0 0 16 16">
+                                <path d="M4 9.42h1.063C5.4 12.323 7.317 14 10.34 14c.622 0 1.167-.068 1.659-.185v-1.3c-.484.119-1.045.17-1.659.17-2.1 0-3.455-1.198-3.775-3.264h4.017v-.928H6.497v-.936c0-.11 0-.219.008-.329h4.078v-.927H6.618c.388-1.898 1.719-2.985 3.723-2.985.614 0 1.175.05 1.659.177V2.194A6.617 6.617 0 0 0 10.341 2c-2.928 0-4.82 1.569-5.244 4.3H4v.928h1.01v1.265H4v.928z"/>
+                            </svg>
+                            <div>
+                                <p class="fw-bold">{% if job.remuneration is not null %}{{ job.remuneration }}{% else %}Non spécifié{% endif %}</p>
+                                <p>Salaire brut</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center me-0 me-xl-5 my-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clipboard2-check-fill me-3" viewBox="0 0 16 16">
+                                <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/>
+                                <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5Zm6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+                            </svg>
+                            <div>
+                                <p class="fw-bold">{{ job.typeOfContract.getLabel(job.typeOfContract) }}</p>
+                                <p>Contrat</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center my-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt-fill me-3" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            <div>
+                                <p class="fw-bold">{{ job.city }}, {{ job.postalCode }}</p>
+                                <p>Localisation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="h2 fw-bold mt-xl-5 mt-4">Détail de l'offre</h2>
+                        <p class="mb-0">{{ job.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

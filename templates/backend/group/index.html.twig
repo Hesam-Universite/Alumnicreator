@@ -1,0 +1,36 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Groupes | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Approuver / Désapprouver</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                {% for group in groups %}
+                    <tr>
+                        <td>{{ group.id }}</td>
+                        <td>{{ group.name }}</td>
+                        <td>
+                            {% if group.isApproved == 0 %}
+                                <span class="text-danger">Non approuvé</span><br />
+                                <a href="{{ path("admin_group_approve", { id: group.id }) }}">Approuver ?</a>
+                            {% else %}
+                                <span class="text-success">Approuvé</span><br />
+                                <a href="{{ path("admin_group_approve", { id: group.id }) }}">Désapprouver ?</a>
+                            {% endif %}
+                        </td>
+                        <td><a class="btn btn-danger" href="{{ path('admin_group_delete', { id: group.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cette fiche d\'annuaire ?')">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

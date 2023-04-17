@@ -1,0 +1,38 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | Gestion offres d'emploi{% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_job_export') }}" class="btn btn-success"><i class="align-middle" data-feather="download"></i> Exporter les offres</a>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Approuver / Désapprouver</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.description }}</td>
+                <td>
+                    {% if job.isApproved == 0 %}
+                        <span class="text-danger">Non approuvé</span><br />
+                        <a href="{{ path("admin_job_approve", { id: job.id }) }}">Approuver ?</a>
+                    {% else %}
+                        <span class="text-success">Approuvé</span><br />
+                        <a href="{{ path("admin_job_approve", { id: job.id }) }}">Désapprouver ?</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

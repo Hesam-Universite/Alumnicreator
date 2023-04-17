@@ -1,0 +1,205 @@
+<nav id="sidebar" class="sidebar js-sidebar sidebar-front sidebar-frontend-{% if visual_configurations.getVisualConfigurations[3] == 2 %}left{% elseif visual_configurations.getVisualConfigurations[3] == 3 %}right{% endif %} collapsed">
+    <div id="btn-menu" style="position: sticky; top: 15px; z-index: 999;">
+        <a class="sidebar-toggle js-sidebar-toggle">
+            <i class="hamburger align-self-center"></i>
+        </a>
+    </div>
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="{{ path('homepage') }}">
+            <img src="{% if content.getContent and content.getContent.logoName %}{{ vich_uploader_asset(content.getContent, 'logoFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}" alt="" height="60">
+        </a>
+
+        <ul class="sidebar-nav">
+
+            <li class="sidebar-header">
+                <div class="mt-xl-0 mt-2 position-relative">
+                    {% if app.user %}
+                        {% set numberOfNotifications = 0 %}
+                        {% for userConversation in app.user.userConversations %}
+                            {% if userConversation.lastVisit < userConversation.lastNotification %}
+                                {% set numberOfNotifications = numberOfNotifications + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if numberOfNotifications >= 1 %}
+                            <div class="notification-global sidebar-activated">
+                                {{ numberOfNotifications }}
+                            </div>
+                        {% endif %}
+                        <a href="{{ path('message_index') }}">
+                            <svg style="color: #495057;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
+                                <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            </svg>
+                        </a>
+                    {% else %}
+                        <div class="d-lg-flex align-items-start flex-column">
+                            <div class="nav-item mb-3">
+                                <a class="nav-link connexion-link" href="{{ path('app_login') }}">Se connecter</a>
+                            </div>
+                            <a class="btn btn-secondary" href="{{ path('app_login') }}">Espace entreprise <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </li>
+
+            <li class="sidebar-header">
+                {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/carriere-black.svg') }}" alt="">{% endif %}
+                Espace carrière
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('resume_all') }}">
+                    <span class="align-middle">CVthèque</span>
+                </a>
+            </li>
+            {% if (is_granted('ROLE_STUDENT') or is_granted('ROLE_ADMIN')) %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('index_companies') }}">
+                        <span class="align-middle">Entreprises</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if (is_granted('ROLE_COMPANY') or is_granted('ROLE_ALUMNI') or is_granted('ROLE_ADMIN')) %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('job_my') }}">
+                        <span class="align-middle">Mes offres</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if (is_granted('ROLE_STUDENT') or is_granted('ROLE_ALUMNI') or is_granted('ROLE_ADMIN')) %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('job_index') }}">
+                        <span class="align-middle">Offres d'emploi</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if (is_granted('ROLE_COMPANY') or is_granted('ROLE_ALUMNI') or is_granted('ROLE_ADMIN')) %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('job_new') }}">
+                        <span class="align-middle">Déposer une offre</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="sidebar-header">
+                {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/annuaire-black.svg') }}" alt="">{% endif %}
+                Annuaire
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('directory_index') }}">
+                    <span class="align-middle">Anciens étudiants</span>
+                </a>
+            </li>
+
+            {% if is_granted('ROLE_STUDENT') or is_granted('ROLE_ADMIN') %}
+                <li class="sidebar-header">
+                    {% if parameterMenuIcons() == 1 %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar me-1" viewBox="0 0 16 16">
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                        </svg>
+                    {% endif %}
+                    Agenda
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('calendar_index') }}">
+                        <span class="align-middle">Calendrier</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="sidebar-header">
+                {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/contact-black.svg') }}" alt="">{% endif %}
+                Actualités
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('article_index') }}">
+                    <span class="align-middle">Tous les articles</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                {{ parameterPageMenu() }}
+            </li>
+
+            {% for link in page() %}
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/page/{{ link.slug }}">
+                    <span class="align-middle">{{ link.title }}</span>
+                </a>
+            </li>
+            {% endfor %}
+
+            {% if app.user %}
+                <li class="sidebar-header">
+                    {% if parameterMenuIcons() == 1 %}<img class="menu-icon" src="{{ asset('build/icons/profil-black.svg') }}" alt="">{% endif %}
+                    Mon compte
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('my_account') }}">
+                        <span class="align-middle">Informations</span>
+                    </a>
+                </li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ path('admin_index') }}">
+                            <span class="align-middle">Back-office</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('app_logout') }}">
+                        <span class="align-middle">Déconnexion</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+{# Javascript adjustments, because our Bootstrap template has only made his menu at the left #}
+<script>
+    let btnMenu = document.getElementById('btn-menu');
+    let menu = document.querySelector('.sidebar-frontend-right');
+
+    btnMenu.addEventListener('click', openCloseNav)
+
+    let menuIsOpen = false;
+    menu.style.marginRight = "-260px";
+
+    function openCloseNav() {
+        if (menuIsOpen) {
+            menu.style.marginRight = "-260px";
+            menuIsOpen = false;
+        } else {
+            menu.style.marginRight = "0px";
+            menuIsOpen = true;
+        }
+    }
+</script>
+
+<!-- <script>
+    if(window.innerWidth < 992) {
+        let btnMenuLeft = document.getElementById('btn-menu');
+        let menu = document.querySelector('.sidebar-frontend-left');
+
+        btnMenuLeft.addEventListener('click', openCloseNav)
+
+        let menuIsOpen = false;
+        menu.style.marginLeft = "-260px";
+
+        function openCloseNav() {
+            if (menuIsOpen) {
+                menu.style.marginLeft = "-260px";
+                menuIsOpen = false;
+            } else {
+                menu.style.marginLeft = "0px";
+                menuIsOpen = true;
+            }
+        }
+    }
+</script> -->

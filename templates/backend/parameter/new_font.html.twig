@@ -1,0 +1,27 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouvelle police personnalisée{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.name, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.name, {'attr':{'class':form.name.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.fontFile, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.fontFile, {'attr':{'class':form.fontFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.fontFile) }}
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

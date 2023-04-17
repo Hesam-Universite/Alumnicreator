@@ -1,0 +1,12 @@
+.btn {
+  p {
+    margin-bottom: 0!important;
+    float: left!important;
+  }
+  &.btn-rounded {
+    p {
+      margin-top: 1.5px!important;
+      margin-right: 7px;
+    }
+  }
+}

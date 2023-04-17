@@ -1,0 +1,29 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | Demandes de contact{% endblock %}
+
+{% block content %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Object</th>
+            <th scope="col">Message</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for requestContact in requestsContact %}
+            <tr>
+                <td>{{ requestContact.object }}</td>
+                <td>{{ requestContact.message }}</td>
+                <td><a class="btn btn-danger" href="{{ path('contact_admin', { id: requestContact.id }) }}">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,23 @@
+.news {
+  .card-article {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    box-shadow: none;
+    .card-body {
+      min-height: 200px;
+      position: relative;
+      @include mobile-only {
+        min-height: unset;
+      }
+      .btn {
+        position: absolute;
+        bottom: 20px;
+        @include mobile-only {
+          position: unset;
+          bottom: unset;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}{{ page.title }} | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="#">{{ page.title }}</a></p>
+    </div>
+    <div class="container first-container">
+        <div class="row">
+            <div>
+                {{ page.content|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

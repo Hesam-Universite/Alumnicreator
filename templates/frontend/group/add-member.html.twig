@@ -1,0 +1,47 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Ajouter un membre au groupe | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a class="breadcrumb--current" href="{{ path('group_new-member', {id: group.id}) }}">Ajouter un membre</a></p>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="card-section">
+                    {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="mb-3">
+                                    {{ form_label(form.user, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.user, {'attr':{'class':form.user.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.user) }}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form_label(form.roleInGroup, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.roleInGroup, {'attr':{'class':form.roleInGroup.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.roleInGroup) }}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4">Ajouter l'utilisateur</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

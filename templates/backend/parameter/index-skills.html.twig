@@ -1,0 +1,32 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Toutes les secteurs d'activité | Alumni Creator{% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_parameters_new-skill') }}" class="btn btn-success"> Nouvelle compétence</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                {% for skill in skills %}
+                    <tr>
+                        <td>{{ skill.id }}</td>
+                        <td>{{ skill.name }}</td>
+                        <td><a class="btn btn-primary" href="{{ path('admin_parameters_edit-skill', {id: skill.id}) }}">Modifier</a></td>
+                        <td><a class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')" href="{{ path('admin_parameters_delete-skill', {id: skill.id}) }}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

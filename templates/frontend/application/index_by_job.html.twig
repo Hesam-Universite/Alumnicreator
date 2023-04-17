@@ -1,0 +1,53 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Mes offres | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('job_my') }}">Mes offres</a> > <a href="{{ path('application_index_by_job', {'id': job.id}) }}" class="breadcrumb--current">Mes candidats</a></p>
+    </div>
+    <div class="container mb-5 my-candidates">
+        <div class="row">
+            <div class="col-xl-12 my-candidates__all">
+                <div class="card-section">
+                    <h1 class="h2 fw-bold">Mes candidats</h1>
+                    <p>Pour l'offre : <span class="fw-bold">{{ jobTitle }}</span></p>
+                    {% if applications|length > 0 %}
+                        <div class="d-block d-xl-none mt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </div>
+                        <div class="overflow-scroll">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Date de candidature</th>
+                                    <th scope="col">Prénom</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Date de naissance</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for application in applications %}
+                                    <tr>
+                                        <td>{{ application.creationDate|date('d/m/Y') }}</td>
+                                        <td>{{ application.user.firstname }}</td>
+                                        <td>{{ application.user.name }}</td>
+                                        <td>{{ application.user.birthday|date('d/m/Y') }}</td>
+                                        <td><a class="btn btn-primary-reverse btn-rounded small" href="{{ path('application_one', {id: application.id}) }}"><p>Télécharger la candidature</p> <i class="bi bi-chevron-right"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-center">Vous n'avez pas encore de candidature pour cette offre d'emploi.</p>
+                    {% endif %}
+                </div>
+                <a href="{{ path('job_download_all_applications', {'id': job.id}) }}" class="btn btn-primary mt-3">Télécharger toutes les candidatures</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Réinitialisez votre mot de passe{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('app_login') }}">Connexion</a> > <a class="breadcrumb--current" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></p>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <div class="card-section mb-5">
+            {% for flash_error in app.flashes('reset_password_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+
+            {{ form_start(requestForm) }}
+            {{ form_label(requestForm.email, null, {'label_attr':{'class':'form-label'}}) }}
+            {{ form_widget(requestForm.email, {'attr':{'class':requestForm.email.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+            {{ form_errors(requestForm.email) }}
+            <div>
+                <small>
+                    Entrez votre adresse e-mail et nous vous enverrons un
+                    lien pour réinitialiser votre mot de passe.
+                </small>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                <button class="btn btn-primary">Envoyer un e-mail de réinitialisation</button>
+            </div>
+            {{ form_end(requestForm) }}
+        </div>
+    </div>
+{% endblock %}

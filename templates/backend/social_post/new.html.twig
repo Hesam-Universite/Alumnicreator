@@ -1,0 +1,34 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouveau post | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container form-article">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.content, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.content, {'attr':{'class':form.content.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.content) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.postImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.postImageFile, {'attr':{'class':form.postImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.postImageFile) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.timeToPublished, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.timeToPublished, {'attr':{'class':form.timeToPublished.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.timeToPublished) }}
+                </div>
+            </div>
+            <div class="mt-4">
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

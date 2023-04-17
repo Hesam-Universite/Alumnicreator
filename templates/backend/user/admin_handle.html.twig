@@ -1,0 +1,18 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | {{ admin.id ? 'Modifier ' ~ admin : 'Ajouter un adminsitrateur' }} {% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_admin_index') }}" class="btn btn-secondary"><i class="align-middle" data-feather="arrow-left"></i> Retour</a>
+{% endblock %}
+
+{% block content %}
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">{{ admin.id ? 'Modifier ' ~ admin : 'Ajouter un adminsitrateur' }}</h1>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}

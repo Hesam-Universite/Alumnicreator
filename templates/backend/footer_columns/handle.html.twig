@@ -1,0 +1,66 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Gestion du footer | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container footer-admin">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{% if columnName %}{{ columnName }}{% else %}Nouvelle colonne{% endif %}</h3>
+            </div>
+            {{ form_start(form) }}
+                <div class="card-body">
+                    <div class="row" {{ stimulus_controller('footercolumn') }}>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                {{ form_label(form.name, null, {'label_attr':{'class':'form-label'}}) }}
+                                {{ form_widget(form.name, {'attr':{'value':columnName? columnName , 'class':form.name.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                {{ form_errors(form.name) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                {{ form_label(form.position, null, {'label_attr':{'class':'form-label'}}) }}
+                                {{ form_widget(form.position, {'attr':{'class':form.name.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                {{ form_errors(form.position) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div data-footercolumn-target="everyFooterPages" class="mt-4">
+                                <label class="required">Pages</label>
+                                <div class="mb-4 mt-2 d-flex">
+                                    <a class="btn btn-success" data-footercolumn-target="addPage">Ajouter une page</a>
+                                    <a class="btn btn-danger ms-4" data-footercolumn-target="removePage">Supprimer une page</a>
+                                </div>
+                                {% if columnContent %}
+                                    {% set pageNumber = 1 %}
+                                    {% for page in columnContent %}
+                                        <div class="row align-items-center footer-page mt-3" id="footer-page-{{ pageNumber }}">
+                                            <div class="col-lg-6">
+                                                <input required value="{{ page[0] }}" type="text" name="name-{{ pageNumber }}" class="form-control" placeholder="Nom de la page">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input required value="{{ page[1] }}" type="text" name="url-{{ pageNumber }}" class="form-control" placeholder="Lien">
+                                            </div>
+                                        </div>
+                                        {% set pageNumber = pageNumber + 1 %}
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="row align-items-center footer-page mt-3" id="footer-page-1">
+                                        <div class="col-lg-6">
+                                            <input required type="text" name="name-1" class="form-control" placeholder="Nom de la page">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input required type="text" name="url-1" class="form-control" placeholder="Lien">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <button class="btn btn-primary mt-5" type="submit">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

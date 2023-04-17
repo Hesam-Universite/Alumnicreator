@@ -1,0 +1,20 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Réinitialisez votre mot de passe{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center my-5">
+            <div class="col-xl-6">
+                <div class="card-section">
+                    <h1 class="h2 text-center">Réinitialisez votre mot de passe</h1>
+
+                    {{ form_start(resetForm) }}
+                    {{ form_row(resetForm.plainPassword) }}
+                    <button class="btn btn-primary">Réinitialiser le mot de passe</button>
+                    {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

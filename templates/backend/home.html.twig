@@ -1,0 +1,46 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title  %}Backoffice | Alumni Creator{% endblock %}
+
+{% block content %}
+    <p class="h3 text-center mb-4">Bienvenue sur votre interface d'administration Alumni Creator</p>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="tutorial-backoffice d-flex flex-column align-items-start">
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <div class="tutorial-backoffice__numbers">1</div><p>Configurez votre instances (mails, menu...) dans la page <a href="{{ path('admin_parameters_set') }}">Paramètres de l'instance</a></p>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <div class="tutorial-backoffice__numbers">2</div><p>Configurez vos paramètres visuels côté client sur la page <a href="{{ path('admin_parameters_visual') }}">Configurations visuelles</a></p>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <div class="tutorial-backoffice__numbers">3</div><p>Explorez le back office et actualisez votre nouvelle plateforme</p>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row mt-4">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Plateforme</h3>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">Nombre d'offres d'emploi : {{ numberOfJobs }}</p>
+                    <p class="mb-0">Nombre d'étudiants inscrits : {{ numberOfStudents }}</p>
+                    <p class="mb-0">Nombre d'entreprises inscrites : {{ numberOfCompanies }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Messagerie</h3>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">Nombre de messages envoyés sur la plateforme : {{ numberOfMessages }}</p>
+                    <p class="mb-0">Nombre de conversations créées : {{ numberOfConversations }}</p>
+                    <p class="mb-0">Nombre d'utilisateurs ayant envoyé au minimum un message : {{ numberUsersWhoSentMessages }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

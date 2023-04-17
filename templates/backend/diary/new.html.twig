@@ -1,0 +1,32 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouvel événement | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                {{ form_label(form.title, null, {'label_attr':{'class':'form-label'}}) }}
+                {{ form_widget(form.title, {'attr':{'class':form.title.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+            <div class="col-lg-6 mb-3">
+                {{ form_label(form.start, null, {'label_attr':{'class':'form-label'}}) }}
+                {{ form_widget(form.start, {'attr':{'class':form.start.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                {{ form_errors(form.start) }}
+            </div>
+            <div class="col-lg-6 mb-3">
+                {{ form_label(form.end, null, {'label_attr':{'class':'form-label'}}) }}
+                {{ form_widget(form.end, {'attr':{'class':form.end.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                {{ form_errors(form.end) }}
+            </div>
+            <div class="d-flex justify-content-start">
+                <button class="btn btn-primary" type="submit">
+                    Envoyer
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

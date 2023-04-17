@@ -1,0 +1,60 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Les articles du groupe | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a class="breadcrumb--current" href="{{ path('group_new-article', {id: group.id}) }}">Nouvel article</a></p>
+    </div>
+
+    <div class="container first-container mb-5">
+        {{ form_start(form) }}
+        <div class="card-section">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.title, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.title, {'attr':{'class':form.title.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.title) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.author, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.author, {'attr':{'class':form.author.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.author) }}
+                    </div>
+
+                    <div class="mb-3" {{ stimulus_controller('tinymceclassic') }}>
+                        {{ form_label(form.content, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.content, {'attr':{'class':form.content.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                        {{ form_errors(form.content) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.tag, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.tag, {'attr':{'class':form.tag.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.tag) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.publishedAt, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.publishedAt, {'attr':{'class':form.publishedAt.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.publishedAt) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.featuredImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.featuredImageFile, {'attr':{'class':form.featuredImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.featuredImageFile) }}
+                    </div>
+                </div>
+                {{ include('frontend/_mention_form.html.twig') }}
+                <div>
+                    <button class="btn btn-primary" type="submit">Envoyer</button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

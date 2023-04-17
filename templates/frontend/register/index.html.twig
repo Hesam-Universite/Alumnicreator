@@ -1,0 +1,36 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Inscription | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('register_index') }}">Inscription</a></p>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div class="col-xl-4 mt-4 mb-5">
+                <div class="card-section">
+                    <h1 class="h2 mb-3 text-center fw-bold">Inscription</h1>
+                    <p class="text-center">Choisissez le type de compte à créer</p>
+                    <div class="d-flex justify-content-around">
+                        <a class="btn btn-primary-reverse btn-rounded" href="{{ path('register_student') }}"><p>Étudiant / Alumni</p> <i class="bi bi-chevron-right"></i></a>
+                        <a class="btn btn-primary-reverse btn-rounded" href="{{ path('register_company') }}"><p>Entreprise</p> <i class="bi bi-chevron-right"></i></a>
+                    </div>
+                    <hr>
+                    <p class="text-center mb-0">Déjà inscrit ? <a href="{{ path('app_login') }}" class="custom-link">Accéder au site</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

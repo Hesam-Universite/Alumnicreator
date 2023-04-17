@@ -1,0 +1,38 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}{{ article.title }} | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a class="breadcrumb--current" href="{{ path('group_new-article', {id: group.id}) }}">{{ article.title }}</a></p>
+    </div>
+    <div class="container mb-5">
+        <div class="row">
+            {% if connectedUserInGroup is not null %}
+                <div class="col-xl-4">
+                    <div class="card-section">
+                        <img class="d-block w-100" src="{{ vich_uploader_asset(article, 'featuredImageFile') }}" alt="">
+                        <h1 class="text-center mt-4">{{ article.title }}</h1>
+                        {% if connectedUserInGroup is not null and (1 == connectedUserInGroup.roleInGroup.value or 2 == connectedUserInGroup.roleInGroup.value) %}
+                            <div class="d-flex justify-content-center mt-4">
+                                <a href="{{ path('group_edit-article', {id: group.id, article: article.id}) }}" class="btn btn-primary btn-rounded m-2">
+                                    Modifier
+                                </a>
+                                <a href="{{ path('group_delete-article', {id: group.id, article: article.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cet article ?')" class="btn btn-primary btn-rounded m-2">
+                                    Supprimer
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xl-8 mt-4 mt-xl-0">
+                    <div class="card-section">
+                        {{ article.content|raw }}
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center">Vous devez être membre de ce groupe pour lire l'article.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['bootstrap_5_horizontal_layout.html.twig']
+    globals:
+        visual_configurations: '@App\Service\VisualConfigurations'
+        fonts: '@App\Service\Fonts'
+        footer_columns: '@App\Service\FooterColumnsService'
+        footer_informations: '@App\Service\FooterInformationsService'
+        content: '@App\Service\ContentService'
+
+when@test:
+    twig:
+        strict_variables: true

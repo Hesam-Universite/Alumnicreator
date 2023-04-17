@@ -1,0 +1,32 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Transférer le groupe | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a href="{{ path('group_members', {id: group.id}) }}">Membres</a> > <a class="breadcrumb--current" href="{{ path('group_transfer', {id: group.id}) }}">Transférer le groupe</a></p>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="card-section">
+                    {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="mb-3">
+                                    {{ form_label(form.user, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.user, {'attr':{'class':form.user.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.user) }}
+                                </div>
+                            </div>
+                        </div>
+                        {{ include('frontend/_mention_form.html.twig') }}
+                        <button type="submit" class="btn btn-primary">Transférer le groupe</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

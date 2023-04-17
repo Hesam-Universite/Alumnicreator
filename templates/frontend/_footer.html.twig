@@ -1,0 +1,55 @@
+<style>
+    .footer-bottom .row .col-xl-6:last-child a {
+        color: {{ visual_configurations.getVisualConfigurations[1] }};
+    }
+    .footer-bottom .row .col-xl-6:last-child a:hover {
+        opacity: 0.9;
+    }
+    footer {
+        background-color: {{ visual_configurations.getVisualConfigurations[2] }};
+    }
+</style>
+
+<footer>
+    <div class="container">
+        <div class="row justify-content-between">
+            {% set i = 0 %}
+            {% for name in footer_columns.getFooterColumnsName %}
+                <div class="col-xl-2">
+                    <h3>{{ name }}</h3>
+                    {% for content in footer_columns.getFooterColumnsContent[i] %}
+                        <a href="{{ content[1] }}">{{ content[0] }}</a>
+                    {% endfor %}
+                </div>
+                {% set i = i + 1 %}
+            {% endfor %}
+            <div class="col-xl-4">
+                <h3>Contact</h3>
+                <a href="tel:{{ footer_informations.getFooterInformations[0] }}"><i class="bi bi-telephone"></i>{{ footer_informations.getFooterInformations[0] }}</a>
+                <a style="color: #ffffff;"><i class="bi bi-geo-alt"></i>{{ footer_informations.getFooterInformations[1] }}</a>
+                <a href="mailto:{{ footer_informations.getFooterInformations[2] }}"><i class="bi bi-envelope-fill"></i>{{ footer_informations.getFooterInformations[2] }}</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="footer-bottom {% if visual_configurations.getVisualConfigurations == 1 %}reddarkred{% elseif visual_configurations.getVisualConfigurations == 2 %}orangeblue{% endif %}">
+    <div class="container">
+        <div class="row py-4">
+            <div class="col-xl-6 d-flex flex-column align-items-xl-start align-items-center">
+                <a href="{{ path('page_privacy_policy') }}">Politique de confidentialité</a>
+                <a href="{{ path('page_privacy_and_cookies') }}">Vie privée et Cookies</a>
+            </div>
+            <div class="col-xl-6 d-flex justify-content-xl-end justify-content-center">
+                <a href="{{ footer_informations.getFooterInformations[3] }}" target="_blank">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="{{ footer_informations.getFooterInformations[4] }}" target="_blank">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="{{ footer_informations.getFooterInformations[5] }}" target="_blank">
+                    <i class="bi bi-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

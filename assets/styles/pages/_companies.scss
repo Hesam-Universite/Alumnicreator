@@ -1,0 +1,14 @@
+.companies {
+  &__all-companies {
+    .overflow-scroll {
+      overflow-x: scroll;
+    }
+    .table {
+      td {
+        @include mobile-only {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+}

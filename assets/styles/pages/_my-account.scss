@@ -1,0 +1,86 @@
+.my-account {
+  &__presentation {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+    i {
+      margin-top: -5px;
+    }
+    h1 {
+      font-weight: bold;
+    }
+    .status-resume {
+      font-weight: bold;
+      font-style: italic;
+    }
+    .separator {
+      margin-bottom: 15px;
+    }
+    .btn {
+      margin-top: 8px;
+    }
+    .user-picture {
+      width: 125px;
+      height: 125px;
+      @include mobile-only {
+        width: 75px;
+        height: 75px;
+      }
+      p {
+        margin-bottom: 0;
+        font-size: 32px;
+      }
+    }
+  }
+  &__similar-profiles {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+    .user-picture {
+      width: 90px;
+      height: 90px;
+      p {
+        font-size: 28px;
+        margin-bottom: 0;
+      }
+    }
+    .send-message-similar-user {
+      font-style: italic;
+      color: #777575;
+      text-decoration: underline;
+      font-weight: bold;
+      &:hover {
+        text-decoration: none!important;
+      }
+    }
+    .see-all-profiles {
+      color: #777575;
+      text-decoration: underline;
+      font-weight: bold;
+      &:hover {
+        text-decoration: none!important;
+      }
+    }
+  }
+  &__informations {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+  }
+  p {
+    margin-bottom: 4px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  .btn {
+    font-weight: unset!important;
+  }
+  .bi-pencil {
+    margin-bottom: 8px;
+    margin-left: 8px;
+  }
+}

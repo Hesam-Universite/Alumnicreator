@@ -1,0 +1,100 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Configurations visuelles | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Charte graphique</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row mb-3">
+                        <label for="PRCO" class="form-label col-md-2 required">Couleur primaire</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="PRCO" name="PRCO" value="{{ parameters['PRCO'] }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="SECO" class="form-label col-md-2 required">Couleur secondaire</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="SECO" name="SECO" value="{{ parameters['SECO'] }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="FOCO" class="form-label col-md-2 required">Couleur pied de page</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="FOCO" name="FOCO" value="{{ parameters['FOCO'] }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Menu principal</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row mb-3">
+                        <label for="MNPO" class="form-label col-md-2 required">Position</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="MNPO" name="MNPO" aria-label="Default select example" required>
+                                <option {% if parameters['MNPO'] == 1 %}selected{% endif %} value="1">Centre</option>
+                                <option {% if parameters['MNPO'] == 2 %}selected{% endif %} value="2">Gauche</option>
+                                <option {% if parameters['MNPO'] == 3 %}selected{% endif %} value="3">Droite</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="MECO" class="form-label col-md-2 required">Couleur menu</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="MECO" name="MECO" value="{{ parameters['MECO'] }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="MEIC" class="form-label col-md-2 required">Icônes</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="MEIC" name="MEIC" aria-label="Default select example" required>
+                                <option {% if parameters['MEIC'] == 1 %}selected{% endif %} value="1">Activées</option>
+                                <option {% if parameters['MEIC'] == 2 %}selected{% endif %} value="2">Désactivées</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" {{ stimulus_controller('typo', {selectedFonts: [parameters['FOH1'], parameters['FOH2'], parameters['FOPA'], parameters['GOFT']], customFonts: everyCustomFonts|serialize(format = 'json')}) }}>
+                <div class="card-header">
+                    <h3 class="card-title">Polices</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row mb-3">
+                        <label for="FOH1" class="form-label col-md-2 required">Police titres H1</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="FOH1" name="FOH1" data-typo-target="foh1" aria-label="Default select example" required>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="FOH2" class="form-label col-md-2 required">Police titres H2</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="FOH2" name="FOH2" data-typo-target="foh2" aria-label="Default select example" required>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="FOPA" class="form-label col-md-2 required">Police contenus</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="FOPA" name="FOPA" data-typo-target="fopa" aria-label="Default select example" required>
+
+                            </select>
+                        </div>
+                    </div>
+                    <a href="{{ path('admin_parameters_index_fonts') }}">Gérer les polices personnalisées</a>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </div>
+{% endblock %}

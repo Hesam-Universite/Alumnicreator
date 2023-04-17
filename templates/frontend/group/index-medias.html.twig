@@ -1,0 +1,22 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Tous les médias du groupe | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a class="breadcrumb--current" href="{{ path('group_index-media', {id: group.id}) }}">Médias</a></p>
+    </div>
+    <div class="container news group-medias">
+        <div class="row">
+            <div class="all-medias mb-5">
+                {% for media in medias %}
+                    {% if connectedUserInGroup is not null %}
+                        <a class="d-block" data-fslightbox="gallery" href="{{ vich_uploader_asset(media, 'mediaFile') }}">
+                            <img src="{{ vich_uploader_asset(media, 'mediaFile') }}">
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

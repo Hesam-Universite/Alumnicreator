@@ -1,0 +1,49 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | Gestion des adminsitrateurs{% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_admin_add') }}" class="btn btn-primary"><i class="align-middle" data-feather="plus"></i> Ajouter un administrateur</a>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Niveau</th>
+                <th scope="col">Activation</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for admin in admins %}
+            <tr>
+                <td>{{ admin.id }}</td>
+                <td>{{ admin.firstname }}</td>
+                <td>{{ admin.name }}</td>
+                <td>{{ admin.email }}</td>
+                <td><span class="badge bg-primary text-white px-4 py-2">{{ 'ROLE_SUPER_ADMIN' in admin.roles ? 'Super Administrateur' : 'Administrateur' }}</span></td>
+                <td>
+                    {% if not admin is same as(app.user) %}
+                        <span class="text-{{ admin.isApproved ? 'success' : 'danger' }}">{{ admin.isApproved ? 'Activé' : 'Désactivé' }}</span><br />
+                        <a href="{{ path("approve_companies", { id: admin.id }) }}">{{ admin.isApproved ? 'Désactiver' : 'Activer' }} ?</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path("admin_admin_edit", { id: admin.id }) }}" class="btn btn-icon btn-warning"><i class="align-middle" data-feather="edit"></i></a>
+                    {% if not admin is same as(app.user) %}
+                        <form method="post" class="d-inline" action="{{ path('admin_admin_delete', {'id': admin.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'administrateur {{ admin }} ? L\'action est irrévocable');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ admin.id) }}">
+                            <button class="btn btn-danger btn-icon"><i class="align-middle" data-feather="trash"></i></button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

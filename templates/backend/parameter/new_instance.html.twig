@@ -1,0 +1,58 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouvelle instance | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.name, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.name, {'attr':{'class':form.name.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div class="form-switch mb-3">
+                        {{ form_widget(form.allowShareJobs, {'attr':{'class':form.allowShareJobs.vars.errors|length ? 'form-check-input is-invalid':'form-check-input', 'role':'switch'}}) }}
+                        {{ form_label(form.allowShareJobs, null, {'label_attr':{'class':'form-check-label'}}) }}
+                        {{ form_errors(form.allowShareJobs) }}
+                    </div>
+                    <div class="form-switch mb-3">
+                        {{ form_widget(form.allowShareResumes, {'attr':{'class':form.allowShareResumes.vars.errors|length ? 'form-check-input is-invalid':'form-check-input', 'role':'switch'}}) }}
+                        {{ form_label(form.allowShareResumes, null, {'label_attr':{'class':'form-check-label'}}) }}
+                        {{ form_errors(form.allowShareResumes) }}
+                    </div>
+                    <div class="form-switch mb-3">
+                        {{ form_widget(form.allowShareStudents, {'attr':{'class':form.allowShareStudents.vars.errors|length ? 'form-check-input is-invalid':'form-check-input', 'role':'switch'}}) }}
+                        {{ form_label(form.allowShareStudents, null, {'label_attr':{'class':'form-check-label'}}) }}
+                        {{ form_errors(form.allowShareStudents) }}
+                    </div>
+                    <div class="form-switch mb-3">
+                        {{ form_widget(form.allowShareCompanies, {'attr':{'class':form.allowShareCompanies.vars.errors|length ? 'form-check-input is-invalid':'form-check-input', 'role':'switch'}}) }}
+                        {{ form_label(form.allowShareCompanies, null, {'label_attr':{'class':'form-check-label'}}) }}
+                        {{ form_errors(form.allowShareCompanies) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.instanceUrl, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.instanceUrl, {'attr':{'class':form.instanceUrl.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.instanceUrl) }}
+                    </div>
+                    <div class="mb-3 {% if null == instance.id %}d-none{% endif %}">
+                        {{ form_label(form.externalId, null, {'label_attr':{'class':'form-label'}}) }}
+                        {% if instance.allowOtherInstance %}
+                            {{ form_widget(form.externalId, {'attr':{'pattern':'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}', 'class':form.externalId.vars.errors|length ? 'form-control is-invalid':'form-control', 'disabled':'disabled'}}) }}
+                        {% else %}
+                            {{ form_widget(form.externalId, {'attr':{'pattern':'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}', 'class':form.externalId.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {% endif %}
+                        {{ form_errors(form.externalId) }}
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

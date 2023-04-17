@@ -1,0 +1,87 @@
+.job-offer {
+  &__company {
+    p {
+      margin-bottom: 0;
+    }
+    .user-picture {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 18px auto;
+    }
+    .fake {
+      p {
+        font-size: 32px;
+      }
+    }
+    svg {
+      color: #9B9B9B;
+    }
+  }
+  &__informations {
+    .icons-section {
+      p {
+        margin-bottom: 0;
+      }
+      svg {
+        color: #9B9B9B;
+      }
+      @include mobile-only {
+        text-align: left;
+        width: 40%;
+        margin: 0 auto;
+      }
+    }
+    @include mobile-only {
+      text-align: center;
+    }
+  }
+}
+
+.my-job-offers {
+  .table {
+    svg {
+      color: red;
+    }
+  }
+}
+
+.my-job-offers {
+  &__all {
+    .overflow-scroll {
+      overflow-x: scroll;
+    }
+    .table {
+      td {
+        @include mobile-only {
+          min-width: 180px;
+        }
+      }
+    }
+  }
+}
+
+.my-candidates {
+  &__all {
+    .overflow-scroll {
+      overflow-x: scroll;
+    }
+    .table {
+      td {
+        @include mobile-only {
+          min-width: 100px;
+        }
+      }
+      .btn {
+        min-width: 250px;
+      }
+    }
+  }
+}
+
+.all-jobs {
+  .table {
+    .btn {
+      min-width: 80px;
+    }
+  }
+}

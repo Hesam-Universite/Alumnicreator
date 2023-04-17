@@ -1,0 +1,47 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Gestion de l'annuaire | Alumni Creator{% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_directory_import') }}" class="btn btn-success"><i class="align-middle" data-feather="upload"></i> Importer un fichier</a>
+{% endblock %}
+
+{% block content %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Promotion</th>
+                <th scope="col">LinkedIn</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for directoryPage in directoryPages %}
+            <tr>
+                <td>{{ directoryPage.firstname }}</td>
+                <td>{{ directoryPage.lastname }}</td>
+                <td>{{ directoryPage.email }}</td>
+                <td>{{ directoryPage.class - 1 }} / {{ directoryPage.class }}</td>
+                <td>
+                    {% if(directoryPage.linkedinLink) %}
+                        <a href="https://www.linkedin.com/in/{{ directoryPage.linkedinLink }}" target="_blank">
+                            LinkedIn
+                        </a>
+                    {% endif %}
+                </td>
+                <td><a class="btn btn-warning" href="{{ path('admin_directory_edit', { id: directoryPage.id }) }}">Modifier</a></td>
+                <td><a class="btn btn-danger" href="{{ path('admin_directory_delete', { id: directoryPage.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cette fiche d\'annuaire ?')">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

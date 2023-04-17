@@ -1,0 +1,38 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | Gestion des étudiants{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Entreprise</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Date d'inscription</th>
+                <th scope="col">Approuver / Désapprouver</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for company in companies %}
+            <tr>
+                <td>{{ company.id }}</td>
+                <td>{{ company.companyName }}</td>
+                <td>{{ company.firstname }}</td>
+                <td>{{ company.name }}</td>
+                <td>{{ company.registrationDate|date('d/m/Y') }}</td>
+                <td>
+                    {% if company.isApproved == 0 %}
+                        <span class="text-danger">Non approuvé</span><br />
+                        <a href="{{ path("approve_companies", { id: company.id }) }}">Approuver ?</a>
+                    {% else %}
+                        <span class="text-success">Approuvé</span><br />
+                        <a href="{{ path("approve_companies", { id: company.id }) }}">Désapprouver ?</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

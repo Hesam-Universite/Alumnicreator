@@ -1,0 +1,29 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Gestion de l'annuaire | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Importer les fiches annuaires</h3>
+        </div>
+        <div class="card-body">
+            <ol>
+                <li>
+                    <strong>Télécharger l'un des deux fichiers gabarits</strong><br>
+                    Fichier Excel .xlsx : <a href="{{ asset('build/files/annuaire_gabarits/gabarit_annuaire.xlsx') }}">gabarit_annuaire.xlsx</a> - Fichier CSV : <a href="{{ asset('build/files/annuaire_gabarits/gabarit_annuaire.csv') }}" download>gabarit_annuaire.csv</a>
+                </li>
+                <li class="mt-3">
+                    <strong>Remplissez le fichier gabarit avec les informations des étudiants</strong><br>
+                    <i class="align-middle text-danger" data-feather="alert-triangle"></i> Ne modifiez pas l'odre des colonnes
+                </li>
+                <li class="mt-3" {{ stimulus_controller('directory') }}>
+                    <strong>Cliquez sur le bouton "Importer" ci-dessous</strong><br>
+                    Puis choisissez le fichier que vous venez de modifier
+                    {{ form(form) }}
+                    <button type="button" class="btn btn-primary" {{ stimulus_action('directory', 'upload') }}>Importer</button>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}

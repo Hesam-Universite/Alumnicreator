@@ -1,0 +1,193 @@
+<nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="{{ path('admin_index') }}">
+            <span class="align-middle">Alumni Creator</span>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Utilisateurs
+            </li>
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('admin_admin_index') }}">
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Administrateurs</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_students') }}">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Étudiants</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_companies') }}">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Entreprises</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                Groupes
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_group_index') }}">
+                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Groupes</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                CMS
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('article_admin_index') }}">
+                    <i class="align-middle" data-feather="edit"></i> <span class="align-middle">Articles</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('page_admin_index') }}">
+                    <i class="align-middle" data-feather="edit"></i> <span class="align-middle">Pages</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_feed_index') }}">
+                    <i class="align-middle" data-feather="rss"></i> <span class="align-middle">Feeds</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                Espace carrière
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_job_index') }}">
+                    <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Offres d'emploi</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                Annuaire
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_directory_index') }}">
+                    <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Gestion de l'annuaire</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_directory_new') }}">
+                    <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Nouvelle page d'annuaire</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                Agenda
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('calendar_admin_index') }}">
+                    <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Agenda</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('calendar_admin_new') }}">
+                    <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Nouvel événement</span>
+                </a>
+            </li>
+
+            {% if (parameterNewsletter().value == 1) %}
+            <li class="sidebar-header">
+                Newsletter
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_newsletter_index') }}">
+                    <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Campagnes de newsletter</span>
+                </a>
+            </li>
+            {% endif %}
+
+            <li class="sidebar-header">
+                Contact
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('contact_admin') }}">
+                    <i class="align-middle" data-feather="send"></i> <span class="align-middle">Demandes de contact</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                Social
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_social_posts_index') }}">
+                    <i class="align-middle" data-feather="facebook"></i> <span class="align-middle">Posts Facebook</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                Paramètres
+            </li>
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('admin_parameters_set') }}">
+                        <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Configuration de l'instance</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('admin_parameters_visual') }}">
+                        <i class="align-middle" data-feather="edit-3"></i> <span class="align-middle">Configurations visuelles</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ path('admin_parameters_index_instances') }}">
+                        <i class="align-middle" data-feather="globe"></i> <span class="align-middle">Connexion avec d'autres instances</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_parameters_index-activityarea') }}">
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">Secteurs d'activité</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_parameters_index-skills') }}">
+                    <i class="align-middle" data-feather="list"></i> <span class="align-middle">Compétences</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_parameters_content') }}">
+                    <i class="align-middle" data-feather="edit"></i> <span class="align-middle">Contenus côté client</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_footer_index') }}">
+                    <i class="align-middle" data-feather="columns"></i> <span class="align-middle">Colonnes pied de page</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ path('admin_parameters_legal-notice') }}">
+                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Mentions légales</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

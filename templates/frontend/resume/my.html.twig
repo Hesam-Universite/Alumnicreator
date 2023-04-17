@@ -1,0 +1,127 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Nouveau CV | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('resume_all') }}">CVthèque</a> > <a href="{{ path('resume_my') }}" class="breadcrumb--current">Mon CV</a></p>
+    </div>
+    <div class="container my-resume mb-5" {{ stimulus_controller('activityarea') }}>
+        {{ form_start(form) }}
+        <div class="card-section">
+            <div class="row">
+                <h1 class="fw-bold h2 text-center">Mon CV</h1>
+                <div class="col-lg-6">
+                    {% if resume.id %}
+                        <div class="mb-3 resume-file">
+                            {{ form_label(form.resume, null, {'label_attr':{'class':'form-label'}}) }}
+                            {{ form_widget(form.resume, {'attr':{'class':form.resume.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                            {{ form_errors(form.resume) }}
+                        </div>
+                    {% else %}
+                        <div class="mb-3 resume-file">
+                            {{ form_label(form.resume, null, {'label_attr':{'class':resume.id?'form-label':'form-label required'}}) }}
+                            {{ form_widget(form.resume, {'attr':{'class':form.resume.vars.errors|length ? 'form-control is-invalid':'form-control', 'required':'true'}}) }}
+                            {{ form_errors(form.resume) }}
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        {{ form_label(form.skill, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.skill, {'attr':{'class':form.skill.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.skill) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.activityArea, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.activityArea, {'attr':{'class':form.activityArea.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.activityArea) }}
+                    </div>
+
+                    <div class="mb-3 d-none" data-activityarea-target="otherfield">
+                        {{ form_label(form.activityAreaOther, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.activityAreaOther, {'attr':{'class':form.activityAreaOther.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.activityAreaOther) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.additionalFile, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.additionalFile, {'attr':{'class':form.additionalFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.additionalFile) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.status, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.status, {'attr':{'class':form.status.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.status) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.presentation, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.presentation, {'attr':{'class':form.presentation.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.presentation) }}
+                    </div>
+                </div>
+            </div>
+            <h2 class="text-center mt-4 mb-3 h2 fw-bold text-center">Informations issues de votre profil</h2>
+            <p></p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(form.user.email, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.email, {'attr':{'class':form.user.email.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.email) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.firstname, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.firstname, {'attr':{'class':form.user.firstname.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.firstname) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.name, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.name, {'attr':{'class':form.user.name.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.name) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.birthday, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.birthday) }}
+                        {{ form_errors(form.user.birthday) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.personalLink, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.personalLink, {'attr':{'class':form.user.personalLink.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.personalLink) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.linkedinLink, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.linkedinLink, {'attr':{'class':form.user.linkedinLink.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.linkedinLink) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.postalCode, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.postalCode, {'attr':{'class':form.user.postalCode.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.postalCode) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.user.pictureFile, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.user.pictureFile, {'attr':{'class':form.user.pictureFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.user.pictureFile) }}
+                    </div>
+                </div>
+            </div>
+            {{ include('frontend/_mention_form.html.twig') }}
+            <button type="submit" class="btn btn-lg btn-primary">{% if resume.id is not empty %}Modifier mon CV{% else %}Envoyer mon CV{% endif %}</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

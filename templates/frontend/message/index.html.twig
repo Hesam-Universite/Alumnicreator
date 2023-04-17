@@ -1,0 +1,91 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Vos conversations | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('message_index') }}">Messagerie</a></p>
+    </div>
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            {% if invitationsPending|length > 0 %}
+                <div class="col-lg-8 mb-4">
+                    <div class="card-section">
+                        {% for invitation in invitationsPending %}
+                            <div class="my-3">
+                                <p class="text-center mb-2">Acceptez-vous l'invitation du groupe</p>
+                                <h3 class="text-center">{{ invitation.userGroup.name }}</h3>
+                                <div class="d-flex justify-content-center">
+                                    <a class="me-4 invitation-accept" href="{{ path('group_answer-invitation', {decision: 'accept', id: invitation.id}) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                        </svg>
+                                    </a>
+                                    <a class="invitation-decline" href="{{ path('group_answer-invitation', {decision: 'decline', id: invitation.id}) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="col-lg-8" id="all-conversations-scroll">
+                <div class="card-section" id="all-conversations-scroll">
+                    {% for userConversation in userConversations|sort((a, b) => a.conversation.lastMessage <=> b.conversation.lastMessage)|reverse %}
+                        <a class="conversation-link" href="{{ path('message_new', { id: userConversation.user.id }) }}">
+                            <div class="conversation my-3 d-flex align-items-center">
+                                {#
+                                I make a for on "userConversationConnectedUser", because I want to know the informations of the connected user
+                                #}
+                                {% for userConversationConnectedUser in userConversationsConnectedUser %}
+                                    {% if userConversation.conversation == userConversationConnectedUser.conversation and userConversationConnectedUser.lastVisit < userConversationConnectedUser.lastNotification %}
+                                        <div class="conversation--notification"></div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if vich_uploader_asset(userConversation.user, 'pictureFile') %}
+                                    <div class="user-picture">
+                                        <img src="{{ vich_uploader_asset(userConversation.user, 'pictureFile') }}" alt="Photo de profil">
+                                    </div>
+                                {% else %}
+                                    <div class="user-picture fake">
+                                        <p>
+                                            {% if 'ROLE_COMPANY' in userConversation.user.roles %}
+                                                {{ userConversation.user.companyName|slice(0, 1)|upper }}
+                                            {% else %}
+                                                {{ userConversation.user.firstname|slice(0, 1)|upper }}{{ userConversation.user.name|slice(0, 1)|upper }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                {% endif %}
+                                {% for message in userConversation.conversation.messages|sort((a, b) => a.sendingTime <=> b.sendingTime)|reverse|slice(0, 1) %}
+                                    <div class="ms-2">
+                                        <p class="h4 mb-1">
+                                            {% if('ROLE_COMPANY' in userConversation.user.roles) %}
+                                                {{ userConversation.user.companyName }}
+                                            {% else %}
+                                                {{ userConversation.user.firstname }} {{ userConversation.user.name }}
+                                            {% endif %}
+                                        </p>
+                                        <p>
+                                            {% if message.content|length > 20 %}
+                                                {{ message.content|slice(0, 20) }}...
+                                            {% else %}
+                                                {{ message.content }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% if userConversations|length <= 0 %}
+                        <p class="text-center mb-0">Vous n'avez échangé aucun message pour le moment</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

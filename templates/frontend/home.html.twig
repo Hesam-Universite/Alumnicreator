@@ -1,0 +1,154 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Accueil | Alumni Creator{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+    <style>
+        /* HOME */
+        .home-first-section .col-xl-5 {
+            background-color: {{ visual_configurations.getVisualConfigurations[0] }};
+        }
+        .home-third-section .section-title {
+            color: {{ visual_configurations.getVisualConfigurations[0] }};
+        }
+        .home-third-section__articles .tag {
+            background-color: {{ visual_configurations.getVisualConfigurations[1] }};
+        }
+        .home-third-section__articles .author {
+            font-weight: bold;
+            color: {{ visual_configurations.getVisualConfigurations[0] }};
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% set contentOfTheHomePage = content.getContent %}
+    <div class="row home-first-section">
+        <div class="col-xl-5">
+            <div class="home-first-section__text">
+                <p class="home-first-section__text--first">{{ contentOfTheHomePage and contentOfTheHomePage.paragraphOne ? contentOfTheHomePage.paragraphOne|raw : 'Lorem ipsum dolor' }}</p>
+                <h1>{{ contentOfTheHomePage and contentOfTheHomePage.mainTitle ? contentOfTheHomePage.mainTitle : 'Alumni Creator' }}</h1>
+                <p class="home-first-section__text--second">{{ contentOfTheHomePage and contentOfTheHomePage.paragraphTwo ? contentOfTheHomePage.paragraphTwo|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi.' }}</p>
+                <div class="btn-container">
+                    <a class="btn btn-light" href="{{ path('register_index') }}">{% if app.user %}Accédez à votre compte{% else %}Activez votre compte{% endif %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-7" style="background-image: url('{% if contentOfTheHomePage and contentOfTheHomePage.heroImageName %}{{ vich_uploader_asset(contentOfTheHomePage, 'heroImageFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}');">
+        </div>
+    </div>
+
+    <div class="home-second-section container">
+        <div class="home-second-section__card">
+            <img src="{% if contentOfTheHomePage and contentOfTheHomePage.studentsImageName %}{{ vich_uploader_asset(contentOfTheHomePage, 'studentsImageFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}" alt="Image étudiante">
+            <div class="home-second-section__card--text">
+                <h2 class="text-center">Etudiants & Diplômés</h2>
+                <p class="text-center">{{ contentOfTheHomePage and contentOfTheHomePage.paragraphThree ? contentOfTheHomePage.paragraphThree|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam' }}</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-primary-reverse btn-rounded" href="{{ path('register_index') }}"><p>{% if app.user %}Accédez à votre compte{% else %}Activez votre compte{% endif %}</p> <i class="bi bi-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="home-second-section__card">
+            <img src="{% if contentOfTheHomePage and contentOfTheHomePage.companiesImageName %}{{ vich_uploader_asset(contentOfTheHomePage, 'companiesImageFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}" alt="Image entreprise">
+            <div class="home-second-section__card--text">
+                <h2 class="text-center">Entreprises & Recruteurs</h2>
+                <p class="text-center">{{ contentOfTheHomePage and contentOfTheHomePage.paragraphFour ? contentOfTheHomePage.paragraphFour|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam'}}</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-primary-reverse btn-rounded" href="{{ path('register_index') }}"><p>{% if app.user %}Accédez à votre compte{% else %}Créez votre compte{% endif %}</p> <i class="bi bi-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-third-section">
+        <div class="container">
+            <div class="home-third-section__intro">
+                <p class="section-title fw-bold">Actualités</p>
+                <h2>Derniers articles</h2>
+                <p class="description">{{ contentOfTheHomePage and contentOfTheHomePage.paragraphFive ? contentOfTheHomePage.paragraphFive|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas scelerisque enim etiam quis. Ultrices velit nec lorem.' }}</p>
+            </div>
+            <div class="home-third-section__articles">
+                {% for article in articles %}
+                    <div class="article">
+                        <div class="article__img">
+                            {% if article.featuredImageName is empty %}
+                                <img src="https://via.placeholder.com/300.png/a1a2a3/a1a2a3" />
+                            {% else %}
+                                <img src="{{ vich_uploader_asset(article, 'featuredImageFile') | imagine_filter('my_thumb') }}" alt="Image de l'article">
+                                {% if article.tag %}
+                                    <p class="tag">{{ article.tag }}</p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="article__text">
+                            {% if article.author %}
+                                <p class="author">{{ article.author }}</p>
+                            {% else %}
+                                <p></p>
+                            {% endif %}
+                            <h3>{{ article.title }}</h3>
+                            <p>{{ article.content|replace({"&nbsp;": " ", "&egrave;": "è", "&agrave;": "à", "&eacute;": "é"})|striptags|u.truncate(100, '...') }}</p>
+                            <a href="{{ path('article_one', { slug: article.slug }) }}" class="btn btn-primary-reverse btn-rounded"><p>Lire la suite</p> <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-center">Aucun article n'a été trouvé</p>
+                {% endfor %}
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{{ path('article_index') }}" class="btn btn-primary large">Plus d'actualités</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-fourth-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-5">
+                    <div class="separator"></div>
+                    <h2 class="mb-3">Témoignages</h2>
+                    <p>{{ contentOfTheHomePage and contentOfTheHomePage.paragraphSix ? contentOfTheHomePage.paragraphSix|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod eu amet luctus dolor nisi, purus sed nibh sagittis. Euismod lacinia pharetra vitae fermentum.' }}</p>
+                    <a class="btn btn-primary-reverse btn-rounded" href="https://www.youtube.com/watch?v=9ZfN87gSjvI" target="_blank"><p>Bouton YouTube</p> <i class="bi bi-chevron-right"></i></a>
+                </div>
+                <div class="col-xl-7 d-flex justify-content-xl-start justify-content-center">
+                    <iframe width="560" height="315" src="{% if contentOfTheHomePage and contentOfTheHomePage.youtubeVideoLink %}{{ contentOfTheHomePage.youtubeVideoLink }}{% else %}https://www.youtube.com/embed/9ZfN87gSjvI?controls=0{% endif %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-fifth-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-7 d-flex justify-content-xl-start justify-content-center align-items-xl-end align-items-center">
+                    <img src="{% if contentOfTheHomePage and contentOfTheHomePage.directoryImageName %}{{ vich_uploader_asset(contentOfTheHomePage, 'directoryImageFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}" alt="Image annuaire">
+                </div>
+                <div class="col-xl-5">
+                    <div class="separator"></div>
+                    <h2 class="mb-3">Annuaire</h2>
+                    <p>{{ contentOfTheHomePage and contentOfTheHomePage.paragraphSeven ? contentOfTheHomePage.paragraphSeven|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id donec maecenas integer felis. Tincidunt id nunc donec fringilla massa quis.' }}</p>
+                    <a class="btn btn-primary-reverse btn-rounded" href="{{ path('directory_index') }}"><p>Accès annuaire</p> <i class="bi bi-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-sixth-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-5">
+                    <div class="separator"></div>
+                    <h2 class="mb-3">Espace carrière</h2>
+                    <p>{{ contentOfTheHomePage and contentOfTheHomePage.paragraphEight ? contentOfTheHomePage.paragraphEight|raw : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id donec maecenas integer felis. Tincidunt id nunc donec fringilla massa quis.' }}</p>
+                    <a class="btn btn-primary-reverse btn-rounded" href="{{ path('resume_all') }}"><p>Accès espace carrière</p> <i class="bi bi-chevron-right"></i></a>
+                </div>
+                <div class="col-xl-7 d-flex justify-content-xl-end justify-content-center align-items-xl-end align-items-center mt-4 mt-xl-0">
+                    <img src="{% if contentOfTheHomePage and contentOfTheHomePage.careerImageName %}{{ vich_uploader_asset(contentOfTheHomePage, 'careerImageFile') }}{% else %}https://via.placeholder.com/300.png/a1a2a3/a1a2a3{% endif %}" alt="Image espace carrière">
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

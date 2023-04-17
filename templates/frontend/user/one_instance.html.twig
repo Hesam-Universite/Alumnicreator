@@ -1,0 +1,205 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}{% if 'ROLE_COMPANY' in user.roles %}{{ user.companyName }}{% else %}{{ user.firstname }} {{ user.name }}{% endif %} | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('one_user', {id: user.id}) }}">{% if 'ROLE_COMPANY' in user.roles %}{{ user.companyName }}{% else %}{{ user.firstname }} {{ user.name }}{% endif %}</a></p>
+    </div>
+
+    <div class="container first-container my-account">
+        <div class="row">
+            <div class="col-xl-8">
+
+                <div class="my-account__presentation d-flex justify-content-between">
+                    <div>
+                        <div class="separator"></div>
+                        <div class="d-xl-flex align-items-center">
+                            <h1>{% if 'ROLE_COMPANY' in user.roles %}{{ user.companyName }}{% else %}{{ user.firstname }} {{ user.name }}{% endif %}</h1>
+                        </div>
+                        {% if 'ROLE_COMPANY' in user.roles %}
+                            <p class="mt-2 d-flex flex-row align-items-center fw-bold"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-briefcase-fill me-2"></i> <span>{{ user.activityArea }}</span></p>
+                        {% else %}
+                            {% if resume %}
+                                <p class="mt-2 d-flex flex-row align-items-center fw-bold">
+                                    <i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-briefcase-fill me-2"></i>
+                                    <span>
+                                        {% set activiteArea = resume.activityArea %}
+                                        {% if activiteArea == 'Autre' and resume.activityAreaOther %}
+                                            {{ resume.activityAreaOther }}
+                                        {% else %}
+                                            {{ activiteArea }}
+                                        {% endif %}
+                                    </span>
+                                </p>
+                            {% endif %}
+                            <p>Promotion {{ user.class - 1 }} / {{ user.class }} en formation "{{ user.training }}" {% if resume %}- <span class="status-resume">{{ resume.status.getLabel(resume.status) }}</span>{% endif %}</p>
+                            <p>{{ user.city }}, {{ user.postalCode }}</p>
+                            <a class="btn btn-primary btn-rounded small" href="mailto:{{ user.email }}"><p>Contacter</p> <i class="bi bi-chevron-right"></i></a>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        {% if user.pictureName is not null %}
+                            <div class="user-picture">
+                                <img src="{{ instance.instanceUrl }}/images/utilisateurs/{{ user.pictureName }}" alt="Photo de profil">
+                            </div>
+                        {% else %}
+                            <div class="user-picture fake">
+                                <p>
+                                    {% if 'ROLE_COMPANY' in user.roles %}
+                                        {{ user.companyName|slice(0, 1)|upper }}
+                                    {% else %}
+                                        {{ user.firstname|slice(0, 1)|upper }}{{ user.name|slice(0, 1)|upper }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if resume and resume.presentation %}
+                    <div class="my-account__informations mt-4">
+                        <div>
+                            <div class="d-xl-flex align-items-center mb-3">
+                                <h2>Carrière professionnelle</h2>
+                            </div>
+                            <p class="fw-bold">{{ resume.status.label() }}</p>
+                            <p>{{ resume.presentation }}</p>
+                            <div class="d-flex flex-column align-items-start mt-4">
+                                <a class="btn btn-rounded btn-primary small" target="_blank" href="{{ instance.instanceUrl }}/documents/cv/{{ resume.resumeName }}"><p>Télécharger le CV</p> <i class="bi bi-chevron-right"></i></a>
+                                {% if resume.additionalFileName %}
+                                    <a class="btn btn-rounded btn-primary-reverse mt-3 small" target="_blank" href="{{ instance.instanceUrl }}/documents/documents-complementaires/{{ resume.additionalFileName }}"><p>Document complémentaire</p> <i class="bi bi-chevron-right"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% set displayedJobs = 0 %}
+                {% if 'ROLE_COMPANY' in user.roles and jobs %}
+                    {% for job in jobs %}
+                        {% set displayedJobs = displayedJobs + 1 %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if 'ROLE_COMPANY' in user.roles and jobs %}
+                    <div class="card-section my-4">
+                        <h2 class="mb-4">Offre{% if displayedJobs > 1 %}s{% endif %}</h2>
+                        {% for job in jobs %}
+                            <div class="mt-4">
+                                <p class="fw-bold">{{ job.title }}</p>
+                                <p>{{ job.description }}</p>
+                                <a class="btn btn-primary btn-rounded small" href="{{ path('job_one_instance', {id: job.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-xl-4 mt-xl-0 mt-4">
+                {% if similarProfiles|length > 0 %}
+                    <div class="my-account__similar-profiles">
+                        <div>
+                            <h2 class="mb-4">Profils similaires</h2>
+                            <div>
+                                {% for similarProfile in similarProfiles %}
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="me-3">
+                                            {% if vich_uploader_asset(similarProfile.user, 'pictureFile') %}
+                                                <div class="user-picture">
+                                                    <img src="{{ vich_uploader_asset(similarProfile.user, 'pictureFile') }}" alt="Photo de profil">
+                                                </div>
+                                            {% else %}
+                                                <div class="user-picture fake">
+                                                    <p>
+                                                        {{ similarProfile.user.firstname|slice(0, 1)|upper }}{{ similarProfile.user.name|slice(0, 1)|upper }}
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <p class="fw-bold">
+                                                {{ similarProfile.user.firstname }} {{ similarProfile.user.name }}
+                                            </p>
+                                            <p>
+                                                {% set activiteArea = similarProfile.activityArea.name %}
+                                                {% if activiteArea == 'Autre' and similarProfile.activityAreaOther %}
+                                                    {{ similarProfile.activityAreaOther }}
+                                                {% else %}
+                                                    {{ activiteArea }}
+                                                {% endif %}
+                                            </p>
+                                            <div>
+                                                <a class="btn btn-primary btn-rounded small" href="{{ path('one_user', {'id': similarProfile.user.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                            </div>
+                                            <div>
+                                                <a class="send-message-similar-user" href="{{ path('message_new', {'id': similarProfile.user.id}) }}">Envoyer un message</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if similarProfiles|length == 3 %}
+                                <div>
+                                    <hr>
+                                    <div class="d-flex justify-content-center">
+                                        <a class="see-all-profiles" href="{{ path('directory_index') }}">Voir tous les profils</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if suggestedCompanies|length > 0 %}
+                    <div class="my-account__similar-profiles mt-4">
+                        <div>
+                            <h2 class="mb-4">Entreprises qui peuvent vous intéresser</h2>
+                            <div>
+                                {% for suggestedCompany in suggestedCompanies %}
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="me-3">
+                                            {% if vich_uploader_asset(suggestedCompany, 'pictureFile') %}
+                                                <div class="user-picture">
+                                                    <img src="{{ vich_uploader_asset(suggestedCompany, 'pictureFile') }}" alt="Photo de profil">
+                                                </div>
+                                            {% else %}
+                                                <div class="user-picture fake">
+                                                    <p>
+                                                        {{ suggestedCompany.companyName|slice(0, 1)|upper }}
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <p class="fw-bold">
+                                                {{ suggestedCompany.companyName }}
+                                            </p>
+                                            <p>{{ suggestedCompany.activityArea.name }}</p>
+                                            <div>
+                                                <a class="btn btn-primary btn-rounded small" href="{{ path('one_user', {'id': suggestedCompany.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                            </div>
+                                            <div>
+                                                <a class="send-message-similar-user" href="{{ path('message_new', {'id': suggestedCompany.id}) }}">Envoyer un message</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if suggestedCompanies|length == 3 %}
+                                <div>
+                                    <hr>
+                                    <div class="d-flex justify-content-center">
+                                        <a class="see-all-profiles" href="{{ path('index_companies') }}">Voir toutes les entreprises</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

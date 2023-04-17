@@ -1,0 +1,32 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Campagnes de newsletter {% endblock %}
+
+{% block header_actions %}
+    <a href="{{ path('admin_newsletter_new') }}" class="btn btn-success"> Nouvelle campagne</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Sujet</th>
+                    <th scope="col">Heure d'envoi</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                {% for newsletterCampaign in newsletterCampaigns %}
+                    <tr>
+                        <td>{{ newsletterCampaign.subject }}</td>
+                        <td>{{ newsletterCampaign.sendingTime|date('d/m/y H:i') }}</td>
+                        <td><a class="btn btn-primary" href="{{ path('admin_newsletter_edit', { id: newsletterCampaign.id }) }}">Modifier</a></td>
+                        <td><a class="btn btn-danger" href="{{ path('admin_newsletter_delete', { id: newsletterCampaign.id }) }}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

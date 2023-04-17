@@ -1,0 +1,58 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Agenda | Alumni Creator{% endblock %}
+
+{% block content %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    <h2 class="mb-2 h3">Événements à venir</h2>
+    <table class="table table-events">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col">Date et heure de début</th>
+            <th scope="col">Date et heure de fin</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in eventsToCome %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.start|date("d/m/Y H:i") }}</td>
+                <td>{{ event.end|date("d/m/Y H:i") }}</td>
+                <td><a class="btn btn-warning" href="{{ path('diary_edit', { id: event.id }) }}">Modifier</a></td>
+                <td><a class="btn btn-danger" href="{{ path('diary_delete', { id: event.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cet événement ?')">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-5 h3">Événements passés</h2>
+    <table class="table table-events">
+        <thead>
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Date et heure de début</th>
+                <th scope="col">Date et heure de fin</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in pastEvents %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.start|date("d/m/Y H:i") }}</td>
+                <td>{{ event.end|date("d/m/Y H:i") }}</td>
+                <td><a class="btn btn-warning" href="{{ path('diary_edit', { id: event.id }) }}">Modifier</a></td>
+                <td><a class="btn btn-danger" href="{{ path('diary_delete', { id: event.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cet événement ?')">Supprimer</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Nouvel événement | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="row" {{ stimulus_controller('event') }}>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.title, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.title, {'attr':{'class':form.title.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.title) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.allDay, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.allDay, {'attr':{'class':form.allDay.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.allDay) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3" data-event-target="dateStart">
+                    {{ form_label(form.start, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.start, {'attr':{'class':form.start.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.start) }}
+                </div>
+                <div class="mb-3" data-event-target="dateEnd">
+                    {{ form_label(form.end, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.end, {'attr':{'class':form.end.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.end) }}
+                </div>
+                <div class="mb-3" data-event-target="fullDateStart">
+                    {{ form_label(form.startFullday, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.startFullday, {'attr':{'class':form.startFullday.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.startFullday) }}
+                </div>
+                <div class="mb-3" data-event-target="fullDateEnd">
+                    {{ form_label(form.endFullday, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.endFullday, {'attr':{'class':form.endFullday.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.endFullday) }}
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
+                <button class="btn btn-primary" type="submit">
+                    Envoyer
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

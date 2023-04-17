@@ -1,0 +1,55 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Alumni Creator | Gestion des étudiants{% endblock %}
+
+{% block content %}
+    <table class="table" {{ stimulus_controller('admin--students', {
+        apiUrl: path('api_internal_student_change_role', {'id': '999999'}),
+        apiToken: apiToken,
+    }) }}>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Promotion</th>
+                <th scope="col">Date d'inscription</th>
+                <th scope="col">Type</th>
+                <th scope="col">Approuver / Désapprouver</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.firstname }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.class }}</td>
+                <td>{{ student.registrationDate|date('d/m/Y') }}</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ 'ROLE_ALUMNI' in student.roles ? 'Alumni' : 'Etudiant' }}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" {{ stimulus_action('admin--students', 'changeStudentRole') }} data-student-id="{{ student.id }}" data-student-role="Alumni">Alumni</a>
+                            <a class="dropdown-item" href="#" {{ stimulus_action('admin--students', 'changeStudentRole') }} data-student-id="{{ student.id }}" data-student-role="Etudiant">Etudiant</a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% if student.isApproved == 0 %}
+                        <span class="text-danger">Non approuvé</span><br />
+                        <a href="{{ path("approve_students", { id: student.id }) }}">Approuver ?</a>
+                    {% else %}
+                        <span class="text-success">Approuvé</span><br />
+                        <a href="{{ path("approve_students", { id: student.id }) }}">Désapprouver ?</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

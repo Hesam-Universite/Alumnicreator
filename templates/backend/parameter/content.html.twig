@@ -1,0 +1,137 @@
+{% extends 'backend/layout.html.twig' %}
+
+{% block title %}Gestion des contenus | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container">
+            {{ form_start(form) }}
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Images</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    {{ form_label(form.logoFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.logoFile, {'attr':{'class':form.logoFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.logoFile) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.faviconFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.faviconFile, {'attr':{'class':form.faviconFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.faviconFile) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.heroImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.heroImageFile, {'attr':{'class':form.heroImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.heroImageFile) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.studentsImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.studentsImageFile, {'attr':{'class':form.studentsImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.studentsImageFile) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    {{ form_label(form.companiesImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.companiesImageFile, {'attr':{'class':form.companiesImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.companiesImageFile) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.directoryImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.directoryImageFile, {'attr':{'class':form.directoryImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.directoryImageFile) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.careerImageFile, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.careerImageFile, {'attr':{'class':form.careerImageFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.careerImageFile) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Textes</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphOne, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphOne, {'attr':{'class':form.paragraphOne.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphOne) }}
+                                </div>
+
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphTwo, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphTwo, {'attr':{'class':form.paragraphTwo.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphTwo) }}
+                                </div>
+
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphThree, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphThree, {'attr':{'class':form.paragraphThree.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphThree) }}
+                                </div>
+
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphFour, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphFour, {'attr':{'class':form.paragraphFour.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.paragraphFour) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.mainTitle, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.mainTitle, {'attr':{'class':form.mainTitle.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.mainTitle) }}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphFive, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphFive, {'attr':{'class':form.paragraphFive.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphFive) }}
+                                </div>
+
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphSix, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphSix, {'attr':{'class':form.paragraphSix.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphSix) }}
+                                </div>
+
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphSeven, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphSeven, {'attr':{'class':form.paragraphSeven.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphSeven) }}
+                                </div>
+
+                                <div class="form-group" {{ stimulus_controller('tinymceclassic') }}>
+                                    {{ form_label(form.paragraphEight, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.paragraphEight, {'attr':{'class':form.paragraphEight.vars.errors|length ? 'form-control tinymce is-invalid':'form-control tinymce'}}) }}
+                                    {{ form_errors(form.paragraphEight) }}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(form.youtubeVideoLink, null, {'label_attr':{'class':'form-label'}}) }}
+                                    {{ form_widget(form.youtubeVideoLink, {'attr':{'class':form.youtubeVideoLink.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                    {{ form_errors(form.youtubeVideoLink) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            {{ form_end(form) }}
+    </div>
+{% endblock %}

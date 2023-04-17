@@ -1,0 +1,7 @@
+#msg-scroll, #all-conversations-scroll {
+  max-height: 60vh;
+  overflow-y: scroll;
+  @include mobile-only {
+    max-height: 40vh;
+  }
+}

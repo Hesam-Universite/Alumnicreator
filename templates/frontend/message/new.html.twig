@@ -1,0 +1,55 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Nouveau message | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('message_index') }}">Messagerie</a> > <a href="{{ path('message_new', {'id':otherUser.id}) }}" class="breadcrumb--current">{% if 'ROLE_COMPANY' in otherUser.roles %} {{ otherUser.companyName }} {% else %} {{ otherUser.firstname }} {{ otherUser.name }} {% endif %}</a></p>
+    </div>
+    <div class="container first-container">
+        <div class="row justify-content-center" {{ stimulus_controller('messages') }}>
+            <div class="col-lg-8 card-section" id="msg-scroll" data-messages-target="msgScroll">
+                {% for message in conversationBetweenBothUsers.messages|sort((a, b) => a.sendingTime <=> b.sendingTime) %}
+                    <div class="{% if message.author.id == connectedUser.id %}connected-user{% else %}recipient{% endif %}">
+                        <div class="content-text">
+                            <p>{{ message.content }}</p>
+                            <p><em>{{ message.sendingTime|date("d/m/Y H:i") }}</em></p>
+                        </div>
+                        {% if vich_uploader_asset(message.author, 'pictureFile') %}
+                            <div class="user-picture">
+                                <img src="{{ vich_uploader_asset(message.author, 'pictureFile') }}" alt="Photo de profil">
+                            </div>
+                        {% else %}
+                            <div class="user-picture fake">
+                                <p>
+                                    {% if 'ROLE_COMPANY' in message.author.roles %}
+                                        {{ message.author.companyName|slice(0, 1)|upper }}
+                                    {% else %}
+                                        {{ message.author.firstname|slice(0, 1)|upper }}{{ message.author.name|slice(0, 1)|upper }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if conversationBetweenBothUsers.messages|length == 0 %}
+                    <p class="text-center fw-bold mb-0">Débutez la conversation dès maintenant</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {{ form_start(form) }}
+                <div class="row my-4">
+                    <div class="col-lg-10">
+                        {{ form_widget(form.content, {'attr':{'class':form.content.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    </div>
+                    <div class="col-lg-2 mt-lg-0 mt-4">
+                        <button type="submit" class="btn btn-primary btn-send-message">Envoyer</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

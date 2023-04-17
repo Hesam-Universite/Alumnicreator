@@ -1,0 +1,35 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Toutes les offres d'emploi | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('index_companies') }}">Entreprises</a> > <a class="breadcrumb--current" href="{{ path('job_index_by_company', {'id': companyId}) }}">Toutes les offres d'emploi de l'entreprise {{ companyName }}</a></p>
+    </div>
+    <div class="container first-container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        <h1>Offres d'emploi de l'entreprise {{ companyName }}</h1>
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Entreprise</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.city }}</td>
+                    <td><a class="btn btn-primary" href="{{ path('job_one', {id: job.id}) }}">Voir</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

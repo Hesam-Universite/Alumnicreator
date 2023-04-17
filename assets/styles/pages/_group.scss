@@ -1,0 +1,165 @@
+.one-group {
+  &__presentation {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+    i {
+      margin-top: -5px;
+    }
+    h1 {
+      font-weight: bold;
+    }
+    .status-resume {
+      font-weight: bold;
+      font-style: italic;
+    }
+    .separator {
+      margin-bottom: 15px;
+    }
+    .btn {
+      margin-top: 8px;
+    }
+    .bi-pencil {
+      margin-bottom: 8px;
+      margin-left: 8px;
+    }
+  }
+
+  &__members {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+    .user-picture {
+      width: 90px;
+      height: 90px;
+      p {
+        font-size: 28px;
+        margin-bottom: 0;
+      }
+    }
+    .send-message-similar-user {
+      font-style: italic;
+      color: #777575;
+      text-decoration: underline;
+      font-weight: bold;
+      &:hover {
+        text-decoration: none!important;
+      }
+    }
+    .see-all-profiles {
+      color: #777575;
+      text-decoration: underline;
+      font-weight: bold;
+      &:hover {
+        text-decoration: none!important;
+      }
+    }
+    .bi-pencil {
+      margin-bottom: 18px;
+      margin-left: 8px;
+    }
+  }
+  &__medias {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+    .last-medias {
+      display: flex;
+      gap: 20px;
+      img {
+        width: 23%;
+        display: block;
+        height: 150px;
+        object-fit: cover;
+      }
+      @include mobile-only {
+        flex-direction: column;
+        img {
+          width: 100%;
+          display: block;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  &__calendar {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+  }
+  &__articles {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #D9D9D9;
+  }
+  p {
+    margin-bottom: 4px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  .btn {
+    font-weight: unset!important;
+  }
+}
+
+.all-groups {
+  .card-group {
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    box-shadow: none;
+    .card-body {
+      min-height: 190px;
+      position: relative;
+      @include mobile-only {
+        min-height: unset;
+      }
+      .btn {
+        position: absolute;
+        bottom: 20px;
+        margin-top: 20px;
+        @include mobile-only {
+          position: unset;
+          bottom: unset;
+        }
+      }
+    }
+  }
+}
+
+.group-medias {
+  .all-medias {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    @include mobile-only {
+      grid-template-columns: repeat(1, 1fr);
+      height: unset;
+    }
+  }
+}
+
+.group-members {
+  .overflow-scroll {
+    overflow-x: scroll;
+  }
+  .table {
+    td {
+      @include mobile-only {
+        min-width: 120px;
+      }
+    }
+  }
+}

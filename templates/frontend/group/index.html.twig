@@ -1,0 +1,56 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Groupes | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('group_index') }}">Groupes</a></p>
+    </div>
+
+    <div class="container all-groups">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        <div class="row">
+            {% for group in groupsUser %}
+                <div class="col-lg-3">
+                    <div class="card card-group" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ group.name|u.truncate(30, '...') }}</h5>
+                            {% if group.activityArea %}
+                                <p class="mt-2 mb-0 d-flex flex-row align-items-center"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-briefcase-fill me-2"></i> <span>{{ group.activityArea.name|u.truncate(30, '...') }}</span></p>
+                            {% endif %}
+                            {% if group.location %}
+                                <p class="mt-2 mb-0 d-flex flex-row align-items-center"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-geo-alt-fill me-2"></i> <span>{{ group.location|u.truncate(30, '...') }}</span></p>
+                            {% endif %}
+                            <a href="{{ path('group_one', { id: group.id }) }}" class="btn btn-primary btn-rounded"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% for group in groups %}
+                <div class="col-lg-3">
+                    <div class="card card-group" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ group.name|u.truncate(30, '...') }}</h5>
+                            {% if group.activityArea %}
+                                <p class="mt-2 mb-0 d-flex flex-row align-items-center"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-briefcase-fill me-2"></i> <span>{{ group.activityArea.name|u.truncate(30, '...') }}</span></p>
+                            {% endif %}
+                            {% if group.location %}
+                                <p class="mt-2 mb-0 d-flex flex-row align-items-center"><i style="color: {{ visual_configurations.getVisualConfigurations[0] }};" class="bi bi-geo-alt-fill me-2"></i> <span>{{ group.location|u.truncate(30, '...') }}</span></p>
+                            {% endif %}
+                            <a href="{{ path('group_one', { id: group.id }) }}" class="btn btn-primary-reverse btn-rounded"><p>Découvrir</p> <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

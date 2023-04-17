@@ -1,0 +1,64 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Mes offres | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('job_my') }}">Mes offres</a></p>
+    </div>
+    <div class="container my-job-offers mb-5">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% if jobs %}
+            <div class="row justify-content-center">
+                <div class="col-xl-8 my-job-offers__all">
+                    <div class="card-section">
+                        <h1 class="fw-bold h2">Mes offres</h1>
+                        <div class="d-block d-xl-none mt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                            </svg>
+                        </div>
+                        <div class="overflow-scroll">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Titre de l'offre</th>
+                                    <th scope="col">Statut</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for job in jobs %}
+                                    <tr>
+                                        <td><a class="custom-link" href="{{ path('job_one', {id: job.id}) }}">{{ job.title }}</a></td>
+                                        <td>
+                                            {% if job.approved == 1 %}
+                                                <p class="text-success mb-0">Publiée</p>
+                                            {% else %}
+                                                <p class="mb-0">En attente</p>
+                                            {% endif %}
+                                        </td>
+                                        <td><a class="btn btn-primary btn-rounded" href="{{ path('application_index_by_job', {id: job.id}) }}"><p>Mes candidats</p> <i class="bi bi-chevron-right"></i></a></td>
+                                        <td><a href="{{ path('job_delete', {id: job.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement cette offre d\'emploi ?')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                </svg>
+                                            </a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Vous n'avez publié aucune offre d'emploi pour le moment</p>
+        {% endif %}
+    </div>
+{% endblock %}

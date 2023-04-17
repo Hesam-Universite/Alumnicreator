@@ -1,0 +1,100 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}CVthèque | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('resume_all') }}">CVthèque</a></p>
+    </div>
+    <div class="container resumes">
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-error mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        <div class="row mb-5">
+            <div>
+                {% if is_granted('ROLE_STUDENT') %}
+                    <a class="btn btn-primary mb-3" href="{{ path('resume_my') }}">Mon CV</a>
+                {% endif %}
+            </div>
+            <div class="col-xl-4">
+                <div class="card-section">
+                    <h2 class="h2 fw-bold">Filtres</h2>
+                    <a class="custom-link" href="{{ path('resume_all') }}">Réinitialiser les filtres</a></p>
+                    {{ form_start(form) }}
+                    <div class="mb-2">
+                        {{ form_label(form.keywords, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.keywords, {'attr':{'class':form.keywords.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.keywords) }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form_label(form.activityArea, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.activityArea, {'attr':{'class':form.activityArea.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.activityArea) }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form_label(form.status, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.status, {'attr':{'class':form.status.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.status) }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form_label(form.department, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.department, {'attr':{'class':form.department.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.department) }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form_label(form.region, null, {'label_attr':{'class':'form-label'}}) }}
+                        {{ form_widget(form.region, {'attr':{'class':form.region.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                        {{ form_errors(form.region) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary-reverse btn-rounded mt-3"><p>Rechercher</p> <i class="bi bi-chevron-right"></i></button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div class="col-xl-8 mt-4 mt-xl-0 resumes__all-students">
+                <div class="card-section">
+                    <h1 class="h2 fw-bold">CVthèque</h1>
+                    <div class="d-block d-xl-none mt-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                        </svg>
+                    </div>
+                    <div class="overflow-scroll">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for resume in resumes %}
+                                <tr>
+                                    <td>{% if resume.user is defined %}{{ resume.user.firstname }}{% else %}{{ resume.firstname }}{% endif %}</td>
+                                    <td>{% if resume.user is defined %}{{ resume.user.name }}{% else %}{{ resume.lastname }}{% endif %}</td>
+                                    <td>
+                                        {% if resume.user is defined %}
+                                            <a class="btn btn-primary btn-rounded small" href="{{ path('one_user', {id: resume.user.id}) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                        {% else %}
+                                            {% if getUserInstanceId(resume.userId, resume.instanceId) %}
+                                                <a class="btn btn-primary btn-rounded small" href="{{ path('one_user_instance', {id: getUserInstanceId(resume.userId, resume.instanceId) }) }}"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

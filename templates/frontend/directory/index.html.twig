@@ -1,0 +1,100 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Annuaire | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a class="breadcrumb--current" href="{{ path('directory_index') }}">Annuaire</a></p>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-3">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="container mb-5 directory">
+        <div class="row">
+            <div>
+                <a class="btn btn-primary mb-3" href="{{ path('group_index') }}">Liste des groupes</a>
+                {% if is_granted('ROLE_STUDENT') %}
+                    <a class="btn btn-primary mb-3" href="{{ path('directory_my_page') }}">Ma page</a>
+                {% endif %}
+            </div>
+            <div class="col-xl-4">
+                <div class="card-section">
+                    <h1 class="h2 fw-bold">Rechercher un élève</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec gravida erat. Aliquam et viverra lorem. </p>
+                    {{ form_start(form) }}
+                        <div>
+                            <div class="mb-3">
+                                {{ form_widget(form.keyword, {'attr':{'class':form.keyword.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                {{ form_errors(form.keyword) }}
+                            </div>
+                            <div>
+                                {{ form_widget(form.class, {'attr':{'class':form.class.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                                {{ form_errors(form.class) }}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-primary-reverse btn-rounded mt-4">Rechercher</button>
+                        <div class="mt-3">
+                            <a href="{{ path('directory_lost_from_sight') }}" class="custom-link">Retrouver un étudiant perdu de vue</a>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div class="col-xl-8 mt-xl-0 mt-4 directory__all-students">
+                <div class="card-section">
+                    <h2 class="fw-bold h2">Annuaire</h2>
+                    <div class="d-block d-xl-none mt-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                        </svg>
+                    </div>
+                    <div class="overflow-scroll">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Promotion</th>
+                                <th scope="col">LinkedIn</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for directoryPage in directoryPages %}
+                                <tr>
+                                    <td>{{ directoryPage.lastname }}</td>
+                                    <td>{{ directoryPage.firstname }}</td>
+                                    <td>{{ directoryPage.email }}</td>
+                                    <td>{{ directoryPage.class - 1 }} / {{ directoryPage.class }}</td>
+                                    <td>
+                                        {% if(directoryPage.linkedinLink) %}
+                                            <a href="https://www.linkedin.com/in/{{ directoryPage.linkedinLink }}" class="custom-link" target="_blank">
+                                                LinkedIn
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if class(directoryPage) == 'DirectoryPageInstance' %}
+                                            {% if directoryPage.userId %}
+                                                {% if getUserInstanceId(directoryPage.userId, directoryPage.instanceId) %}
+                                                    <a href="{{ path('one_user_instance', { id: getUserInstanceId(directoryPage.userId, directoryPage.instanceId) }) }}" class="btn btn-primary btn-rounded small"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            {% if directoryPage.user %}<a href="{{ path('one_user', { id: directoryPage.user.id }) }}" class="btn btn-primary btn-rounded small"><p>Voir</p> <i class="bi bi-chevron-right"></i></a>{% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

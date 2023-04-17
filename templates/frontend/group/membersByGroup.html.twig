@@ -1,0 +1,63 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}{{ group.name }} | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('group_index') }}">Groupes</a> > <a href="{{ path('group_one', {id: group.id}) }}">{{ group.name }}</a> > <a href="{{ path('group_members', {id: group.id}) }}" class="breadcrumb--current">Membres</a></p>
+    </div>
+
+    <div class="container mb-5">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-success mb-3">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        <div class="row justify-content-center">
+            <div class="col-xl-8 mt-4 mt-xl-0 group-members">
+                {% if is_granted('ROLE_ADMIN') or (connectedUserInGroup is not null and 1 == connectedUserInGroup.roleInGroup.value) %}
+                    <a href="{{ path('group_transfer', {id: group.id}) }}" class="btn btn-primary">Transférer le groupe</a>
+                {% endif %}
+                <div class="card-section mt-3">
+                    <h1 class="h2 fw-bold">Membres du groupe</h1>
+                    <div class="d-block d-xl-none mt-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                        </svg>
+                    </div>
+                    <div class="overflow-scroll">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Rôle</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for member in members %}
+                                <tr>
+                                    <td>{{ member.user.firstname }}</td>
+                                    <td>{{ member.user.name }}</td>
+                                    <td>{{ member.roleInGroup.label() }}</td>
+                                    <td>
+                                        {% if connectedUserInGroup and connectedUserInGroup.roleInGroup.value < member.roleInGroup.value %}
+                                            <a class="btn btn-primary btn-rounded small" href="{{ path('group_remove', {group: group.id, user: member.user.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir retirer cet utilisateur du groupe ?')"><p>Retirer</p> <i class="bi bi-chevron-right"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

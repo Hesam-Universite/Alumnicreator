@@ -1,0 +1,28 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Nouvelle candidature | Alumni Creator{% endblock %}
+
+{% block content %}
+    <div class="container breadcrumb">
+        <p><a href="{{ path('homepage') }}">Accueil</a> > <a href="{{ path('job_index') }}">Offres</a> > <a href="{{ path('job_one', {'id': jobId}) }}">{{ jobTitle }}</a> > <a href="{{ path('application_new', {'id': jobId}) }}" class="breadcrumb--current">Candidater</a></p>
+    </div>
+    {{ form_start(form) }}
+    <div class="container first-container">
+        <div class="row">
+            <h1 class="h2 text-center mb-2">Candidater</h1>
+            <p class="text-center mb-4">Intitulé de l'offre : {{ jobTitle }}</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.additionalFile, null, {'label_attr':{'class':'form-label'}}) }}
+                    {{ form_widget(form.additionalFile, {'attr':{'class':form.additionalFile.vars.errors|length ? 'form-control is-invalid':'form-control'}}) }}
+                    {{ form_errors(form.additionalFile) }}
+                </div>
+            </div>
+        </div>
+        {{ include('frontend/_mention_form.html.twig') }}
+        <button type="submit" class="btn btn-primary">Envoyer ma candidature</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
